@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { useJobStore } from '@/store/useJobStore';
@@ -20,7 +20,6 @@ const Tracking = () => {
 
   const job = jobs.find(j => j.id === id);
   
-  // Simulated worker movement
   const [workerPos, setWorkerPos] = useState<[number, number]>([24.7200, 46.6800]);
   
   useEffect(() => {
@@ -33,14 +32,22 @@ const Tracking = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (!job) return null;
-
-  const workerIcon = L.divIcon({
+  const workerIcon = useMemo(() => L.divIcon({
     className: 'custom-div-icon',
     html: `<div style="background-color: #0d9488; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>`,
     iconSize: [12, 12],
     iconAnchor: [6, 6]
-  });
+  }), []);
+
+  const markers = useMemo(() => {
+    if (!job) return [];
+    return [
+      { position: [job.location.lat, job.location.lng] as [number, number], title: isAr ? 'موقعك' : 'Your Location' },
+      { position: workerPos, title: isAr ? 'الفني' : 'Expert', icon: workerIcon }
+    ];
+  }, [job, workerPos, isAr, workerIcon]);
+
+  if (!job) return null;
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col max-w-md mx-auto relative">
@@ -62,10 +69,7 @@ const Tracking = () => {
           center={workerPos} 
           zoom={15}
           className="h-full w-full"
-          markers={[
-            { position: [job.location.lat, job.location.lng], title: isAr ? 'موقعك' : 'Your Location' },
-            { position: workerPos, title: isAr ? 'الفني' : 'Expert', icon: workerIcon }
-          ]}
+          markers={markers}
         />
       </div>
 

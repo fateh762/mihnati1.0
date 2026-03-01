@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -16,24 +16,23 @@ const DefaultIcon = L.icon({
   iconAnchor: [12, 41],
 });
 
-L.Marker.prototype.options.icon = DefaultIcon;
-
 interface MapViewProps {
   center: [number, number];
   zoom?: number;
   markers?: Array<{
     position: [number, number];
     title?: string;
-    icon?: L.Icon;
+    icon?: L.Icon | L.DivIcon;
   }>;
   className?: string;
 }
 
-// Component to handle map center updates
 function ChangeView({ center, zoom }: { center: [number, number], zoom: number }) {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, zoom);
+    if (map) {
+      map.setView(center, zoom);
+    }
   }, [center, zoom, map]);
   return null;
 }
@@ -53,7 +52,11 @@ const MapView = ({ center, zoom = 13, markers = [], className }: MapViewProps) =
         />
         <ChangeView center={center} zoom={zoom} />
         {markers.map((marker, idx) => (
-          <Marker key={idx} position={marker.position} icon={marker.icon}>
+          <Marker 
+            key={`${idx}-${marker.position[0]}-${marker.position[1]}`} 
+            position={marker.position} 
+            icon={marker.icon || DefaultIcon}
+          >
             {marker.title && <Popup>{marker.title}</Popup>}
           </Marker>
         ))}

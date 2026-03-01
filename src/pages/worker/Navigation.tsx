@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { useJobStore } from '@/store/useJobStore';
@@ -15,7 +15,7 @@ const Navigation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { language } = useStore();
-  const { jobs, updateJobStatus } = useJobStore();
+  const { jobs } = useJobStore();
   const isAr = language === 'ar';
 
   const job = jobs.find(j => j.id === id);
@@ -31,11 +31,18 @@ const Navigation = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const markers = useMemo(() => {
+    if (!job) return [];
+    return [
+      { position: [job.location.lat, job.location.lng] as [number, number], title: isAr ? 'موقع العميل' : 'Client Location' },
+      { position: myPos, title: isAr ? 'موقعك' : 'Your Location' }
+    ];
+  }, [job, myPos, isAr]);
+
   if (!job) return null;
 
   const handleArrived = () => {
     showSuccess(isAr ? 'تم تأكيد الوصول' : 'Arrival confirmed');
-    // In a real app, this would update status to 'arrived'
   };
 
   return (
@@ -61,10 +68,7 @@ const Navigation = () => {
           center={myPos} 
           zoom={16}
           className="h-full w-full"
-          markers={[
-            { position: [job.location.lat, job.location.lng], title: isAr ? 'موقع العميل' : 'Client Location' },
-            { position: myPos, title: isAr ? 'موقعك' : 'Your Location' }
-          ]}
+          markers={markers}
         />
       </div>
 
