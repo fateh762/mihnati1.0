@@ -8,7 +8,7 @@ import MapView from '@/components/MapView';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Phone, MessageCircle, Clock, MapPin } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Phone, MessageSquare, Clock, MapPin, CheckCircle2 } from 'lucide-react';
 import L from 'leaflet';
 
 const Tracking = () => {
@@ -76,7 +76,7 @@ const Tracking = () => {
       <motion.div 
         initial={{ y: 100 }}
         animate={{ y: 0 }}
-        className="absolute bottom-0 left-0 right-0 p-6 z-20"
+        className="absolute bottom-0 left-0 right-0 p-6 z-20 space-y-4"
       >
         <Card className="p-5 border-none shadow-2xl space-y-4 rounded-[32px]">
           <div className="flex items-center gap-4">
@@ -89,7 +89,12 @@ const Tracking = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <button className="p-3 bg-teal-50 text-teal-600 rounded-xl"><MessageCircle size={20} /></button>
+              <button 
+                onClick={() => navigate('/chat/1')}
+                className="p-3 bg-teal-50 text-teal-600 rounded-xl"
+              >
+                <MessageSquare size={20} />
+              </button>
               <button className="p-3 bg-orange-50 text-orange-600 rounded-xl"><Phone size={20} /></button>
             </div>
           </div>
@@ -103,9 +108,13 @@ const Tracking = () => {
             />
           </div>
           
-          <p className="text-center text-[10px] text-slate-400">
-            {isAr ? 'يرجى التواجد في الموقع لاستقبال الفني' : 'Please be at the location to receive the expert'}
-          </p>
+          <Button 
+            onClick={() => navigate(`/client/job/${id}/review`)}
+            className="w-full h-12 bg-teal-600 hover:bg-teal-700 rounded-xl text-sm font-bold shadow-md gap-2"
+          >
+            <CheckCircle2 size={18} />
+            {isAr ? 'تأكيد إنجاز المهمة' : 'Confirm Completion'}
+          </Button>
         </Card>
       </motion.div>
     </div>

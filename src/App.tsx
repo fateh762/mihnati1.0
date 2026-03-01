@@ -24,6 +24,9 @@ import WorkerEarnings from "./pages/worker/Earnings";
 import JobBids from "./pages/client/JobBids";
 import Tracking from "./pages/client/Tracking";
 import Navigation from "./pages/worker/Navigation";
+import Messages from "./pages/Messages";
+import Chat from "./pages/Chat";
+import Review from "./pages/client/Review";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +50,10 @@ const App = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="/user-type" element={<UserTypeSelection />} />
             
+            {/* Shared Routes */}
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/chat/:id" element={<Chat />} />
+            
             {/* Worker Routes */}
             <Route path="/worker/register" element={<WorkerRegistration />} />
             <Route path="/worker/dashboard" element={<WorkerDashboard />} />
@@ -64,6 +71,7 @@ const App = () => {
             <Route path="/client/jobs" element={<ClientJobs />} />
             <Route path="/client/job/:id/bids" element={<JobBids />} />
             <Route path="/client/job/:id/tracking" element={<Tracking />} />
+            <Route path="/client/job/:id/review" element={<Review />} />
             <Route path="/client/profile" element={<ClientProfile />} />
             
             <Route path="*" element={<NotFound />} />
