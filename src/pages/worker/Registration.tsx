@@ -15,18 +15,18 @@ const WorkerRegistration = () => {
   const isAr = language === 'ar';
 
   const categories = [
+    { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
+    { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
+    { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
+    { id: 'tailoring', label: isAr ? 'خياطة وتفصيل' : 'Tailoring' },
+    { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
     { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
     { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
     { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content Creation' },
     { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering' },
-    { id: 'drivers', label: isAr ? 'سائق' : 'Driver' },
-    { id: 'delivery', label: isAr ? 'توصيل طلبات' : 'Delivery' },
-    { id: 'moving', label: isAr ? 'نقل عفش' : 'Moving & Packing' },
     { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
-    { id: 'design', label: isAr ? 'تصميم جرافيك' : 'Graphic Design' },
-    { id: 'translation', label: isAr ? 'ترجمة' : 'Translation' },
     { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
     { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
     { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },

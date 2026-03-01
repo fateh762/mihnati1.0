@@ -11,26 +11,26 @@ const ClientDashboard = () => {
   const isAr = language === 'ar';
 
   const categories = [
+    { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist', icon: '💄' },
+    { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist', icon: '💇‍♀️' },
+    { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist', icon: '🎨' },
+    { id: 'tailoring', label: isAr ? 'خياطة وتفصيل' : 'Tailoring', icon: '🧵' },
+    { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon', icon: '💅' },
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing', icon: '🚰' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical', icon: '⚡' },
     { id: 'it_support', label: isAr ? 'دعم فني' : 'IT Support', icon: '💻' },
     { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Writing', icon: '✍️' },
     { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content', icon: '🤳' },
     { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering', icon: '🍲' },
-    { id: 'drivers', label: isAr ? 'سائقين' : 'Drivers', icon: '🚗' },
-    { id: 'delivery', label: isAr ? 'توصيل' : 'Delivery', icon: '📦' },
-    { id: 'moving', label: isAr ? 'نقل عفش' : 'Moving', icon: '🚛' },
     { id: 'photography', label: isAr ? 'تصوير' : 'Photography', icon: '📸' },
-    { id: 'design', label: isAr ? 'تصميم' : 'Design', icon: '🎨' },
-    { id: 'translation', label: isAr ? 'ترجمة' : 'Translation', icon: '🌐' },
     { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair', icon: '❄️' },
     { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
     { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring', icon: '📚' },
   ];
 
   const featuredWorkers = [
-    { id: 1, name: 'محمد العتيبي', rating: 4.9, jobs: 150, category: isAr ? 'سباك' : 'Plumber', image: 'https://i.pravatar.cc/150?u=1' },
-    { id: 2, name: 'سارة خالد', rating: 4.8, jobs: 89, category: isAr ? 'كاتبة محتوى' : 'Content Writer', image: 'https://i.pravatar.cc/150?u=3' },
+    { id: 1, name: 'نورة العلي', rating: 4.9, jobs: 124, category: isAr ? 'خبيرة تجميل' : 'Makeup Artist', image: 'https://i.pravatar.cc/150?u=female1' },
+    { id: 2, name: 'محمد العتيبي', rating: 4.9, jobs: 150, category: isAr ? 'سباك' : 'Plumber', image: 'https://i.pravatar.cc/150?u=1' },
   ];
 
   return (
