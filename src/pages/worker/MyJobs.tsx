@@ -4,9 +4,10 @@ import { useStore } from '@/store/useStore';
 import { useJobStore } from '@/store/useJobStore';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, ChevronRight, ChevronLeft } from 'lucide-react';
+import { MapPin, Clock, ChevronRight, ChevronLeft, Navigation } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const WorkerJobs = () => {
   const { language } = useStore();
@@ -40,7 +41,7 @@ const WorkerJobs = () => {
           <TabsContent value="active" className="mt-6 space-y-4">
             {jobs.filter(j => j.status === 'in_progress').length > 0 ? (
               jobs.filter(j => j.status === 'in_progress').map(job => (
-                <JobCard key={job.id} job={job} isAr={isAr} />
+                <JobCard key={job.id} job={job} isAr={isAr} isActive />
               ))
             ) : (
               <EmptyState isAr={isAr} />
@@ -62,7 +63,7 @@ const WorkerJobs = () => {
   );
 };
 
-const JobCard = ({ job, isAr }: { job: any, isAr: boolean }) => (
+const JobCard = ({ job, isAr, isActive }: { job: any, isAr: boolean, isActive?: boolean }) => (
   <motion.div
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
@@ -88,10 +89,20 @@ const JobCard = ({ job, isAr }: { job: any, isAr: boolean }) => (
         <img src="https://i.pravatar.cc/150?u=client" className="w-6 h-6 rounded-full" alt="client" />
         <span className="text-xs font-medium text-slate-600">سارة الأحمد</span>
       </div>
-      <button className="text-teal-600 text-xs font-bold flex items-center gap-1">
-        {isAr ? 'التفاصيل' : 'Details'}
-        {isAr ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
-      </button>
+      {isActive ? (
+        <Link 
+          to={`/worker/job/${job.id}/navigation`}
+          className="bg-teal-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md"
+        >
+          <Navigation size={14} />
+          {isAr ? 'توجه للموقع' : 'Navigate'}
+        </Link>
+      ) : (
+        <Link to={`/worker/job/${job.id}`} className="text-teal-600 text-xs font-bold flex items-center gap-1">
+          {isAr ? 'التفاصيل' : 'Details'}
+          {isAr ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+        </Link>
+      )}
     </div>
   </motion.div>
 );

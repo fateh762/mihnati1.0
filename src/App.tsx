@@ -22,6 +22,8 @@ import WorkerProfile from "./pages/worker/Profile";
 import ClientProfile from "./pages/client/Profile";
 import WorkerEarnings from "./pages/worker/Earnings";
 import JobBids from "./pages/client/JobBids";
+import Tracking from "./pages/client/Tracking";
+import Navigation from "./pages/worker/Navigation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +53,7 @@ const App = () => {
             <Route path="/worker/explore" element={<Explore />} />
             <Route path="/worker/job/:id" element={<JobDetails />} />
             <Route path="/worker/jobs" element={<WorkerJobs />} />
+            <Route path="/worker/job/:id/navigation" element={<Navigation />} />
             <Route path="/worker/earnings" element={<WorkerEarnings />} />
             <Route path="/worker/profile" element={<WorkerProfile />} />
             
@@ -60,6 +63,7 @@ const App = () => {
             <Route path="/client/post-job" element={<PostJob />} />
             <Route path="/client/jobs" element={<ClientJobs />} />
             <Route path="/client/job/:id/bids" element={<JobBids />} />
+            <Route path="/client/job/:id/tracking" element={<Tracking />} />
             <Route path="/client/profile" element={<ClientProfile />} />
             
             <Route path="*" element={<NotFound />} />

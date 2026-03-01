@@ -4,7 +4,7 @@ import { useStore } from '@/store/useStore';
 import { useJobStore } from '@/store/useJobStore';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, ChevronRight, ChevronLeft, Users } from 'lucide-react';
+import { MapPin, Clock, ChevronRight, ChevronLeft, Users, Navigation } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 
@@ -59,10 +59,42 @@ const ClientJobs = () => {
             ))}
           </TabsContent>
 
-          <TabsContent value="active" className="mt-6">
-            <div className="py-12 text-center text-slate-400">
-              {isAr ? 'لا توجد مهام قيد التنفيذ حالياً' : 'No active jobs at the moment'}
-            </div>
+          <TabsContent value="active" className="mt-6 space-y-4">
+            {jobs.filter(j => j.status === 'in_progress').length > 0 ? (
+              jobs.filter(j => j.status === 'in_progress').map(job => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 space-y-4"
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-1">
+                      <Badge className="bg-teal-50 text-teal-700 border-none">{job.category}</Badge>
+                      <h3 className="font-bold text-slate-800">{job.title}</h3>
+                    </div>
+                    <div className="text-teal-600 font-bold">{job.price} SAR</div>
+                  </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-50">
+                    <div className="flex items-center gap-2">
+                      <img src="https://i.pravatar.cc/150?u=worker" className="w-8 h-8 rounded-full" alt="worker" />
+                      <span className="text-xs font-medium text-slate-600">أحمد محمد</span>
+                    </div>
+                    <Link 
+                      to={`/client/job/${job.id}/tracking`}
+                      className="bg-teal-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md"
+                    >
+                      <Navigation size={14} />
+                      {isAr ? 'تتبع الفني' : 'Track Expert'}
+                    </Link>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="py-12 text-center text-slate-400">
+                {isAr ? 'لا توجد مهام قيد التنفيذ حالياً' : 'No active jobs at the moment'}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="history" className="mt-6">
