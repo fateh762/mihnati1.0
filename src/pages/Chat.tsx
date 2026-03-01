@@ -43,7 +43,6 @@ const Chat = () => {
     setMessages([...messages, newMsg]);
     setInput('');
 
-    // Mock reply
     setTimeout(() => {
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
@@ -55,36 +54,38 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col max-w-md mx-auto">
-      <header className="p-4 bg-white border-b border-slate-100 flex items-center justify-between sticky top-0 z-10">
+    <div className="min-h-screen bg-[#02040a] flex flex-col max-w-md mx-auto relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+      
+      <header className="p-4 glass border-b border-white/5 flex items-center justify-between sticky top-0 z-20">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-2 hover:bg-slate-50 rounded-full">
+          <button onClick={() => navigate(-1)} className="p-2 text-slate-400 hover:text-white transition-colors">
             {isAr ? <ChevronRight /> : <ChevronLeft />}
           </button>
           <div className="flex items-center gap-3">
             <div className="relative">
-              <img src="https://i.pravatar.cc/150?u=worker" className="w-10 h-10 rounded-xl object-cover" alt="avatar" />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full" />
+              <img src="https://i.pravatar.cc/150?u=worker" className="w-10 h-10 rounded-xl object-cover border border-white/10" alt="avatar" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-teal-500 border-2 border-[#02040a] rounded-full shadow-[0_0_8px_rgba(20,184,166,0.8)]" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-800">أحمد محمد</h2>
-              <p className="text-[10px] text-emerald-600 font-medium">{isAr ? 'متصل الآن' : 'Online'}</p>
+              <h2 className="text-sm font-black text-white tracking-tight">أحمد محمد</h2>
+              <p className="text-[9px] text-teal-400 font-black uppercase tracking-widest">{isAr ? 'متصل' : 'Syncing'}</p>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button className="p-2 text-slate-400 hover:text-teal-600"><Phone size={20} /></button>
-          <button className="p-2 text-slate-400 hover:text-teal-600"><MoreVertical size={20} /></button>
+          <button className="p-2 text-slate-500 hover:text-teal-400 transition-colors"><Phone size={20} /></button>
+          <button className="p-2 text-slate-500 hover:text-teal-400 transition-colors"><MoreVertical size={20} /></button>
         </div>
       </header>
 
       <div 
         ref={scrollRef}
-        className="flex-1 p-4 overflow-y-auto space-y-4 scroll-smooth"
+        className="flex-1 p-4 overflow-y-auto space-y-6 scroll-smooth relative z-10"
       >
         <div className="flex justify-center">
-          <span className="px-3 py-1 bg-slate-200/50 text-[10px] text-slate-500 rounded-full font-medium">
-            {isAr ? 'اليوم' : 'Today'}
+          <span className="px-4 py-1 glass text-[9px] text-slate-500 rounded-full font-black uppercase tracking-[0.2em] border-white/5">
+            {isAr ? 'اليوم' : 'Cycle: Today'}
           </span>
         </div>
 
@@ -94,40 +95,40 @@ const Chat = () => {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             className={cn(
-              "flex flex-col max-w-[80%]",
+              "flex flex-col max-w-[85%]",
               msg.sender === 'me' ? (isAr ? "mr-auto items-start" : "ml-auto items-end") : (isAr ? "ml-auto items-end" : "mr-auto items-start")
             )}
           >
             <div className={cn(
-              "px-4 py-3 rounded-2xl text-sm shadow-sm",
+              "px-5 py-3 rounded-[1.5rem] text-sm font-medium shadow-xl",
               msg.sender === 'me' 
-                ? "bg-teal-600 text-white rounded-br-none" 
-                : "bg-white text-slate-800 rounded-bl-none border border-slate-100"
+                ? "bg-teal-600 text-white rounded-br-none shadow-teal-500/10" 
+                : "glass text-white rounded-bl-none border-white/10"
             )}>
               {msg.text}
             </div>
-            <span className="text-[9px] text-slate-400 mt-1 px-1">{msg.time}</span>
+            <span className="text-[8px] font-bold text-slate-600 mt-1.5 px-2 uppercase tracking-widest">{msg.time}</span>
           </motion.div>
         ))}
       </div>
 
-      <footer className="p-4 bg-white border-t border-slate-100">
-        <form onSubmit={handleSend} className="flex items-center gap-2">
-          <button type="button" className="p-2 text-slate-400 hover:text-teal-600"><ImageIcon size={22} /></button>
-          <button type="button" className="p-2 text-slate-400 hover:text-teal-600"><MapPin size={22} /></button>
-          <div className="flex-1 relative">
+      <footer className="p-4 glass border-t border-white/5 relative z-20">
+        <form onSubmit={handleSend} className="flex items-center gap-3">
+          <button type="button" className="p-2 text-slate-500 hover:text-teal-400 transition-colors"><ImageIcon size={22} /></button>
+          <div className="flex-1 relative group">
+            <div className="absolute -inset-0.5 bg-teal-500 rounded-2xl blur opacity-0 group-focus-within:opacity-20 transition duration-500" />
             <Input 
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={isAr ? 'اكتب رسالتك...' : 'Type a message...'}
-              className="h-12 rounded-2xl bg-slate-50 border-none focus-visible:ring-teal-600 pr-12"
+              placeholder={isAr ? 'اكتب رسالتك...' : 'Input data stream...'}
+              className="h-12 rounded-2xl bg-white/5 border-white/5 text-white placeholder:text-slate-600 focus:ring-teal-500/50 pr-12"
             />
             <button 
               type="submit"
               disabled={!input.trim()}
               className={cn(
                 "absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-xl transition-all",
-                input.trim() ? "bg-teal-600 text-white shadow-md" : "bg-slate-200 text-slate-400"
+                input.trim() ? "bg-teal-500 text-white shadow-[0_0_15px_rgba(20,184,166,0.4)]" : "bg-white/5 text-slate-600"
               )}
             >
               <Send size={18} className={isAr ? "rotate-180" : ""} />

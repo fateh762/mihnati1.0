@@ -3,7 +3,7 @@ import MobileLayout from '@/components/MobileLayout';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Globe, LogOut, User, Shield, Bell, HelpCircle, ChevronRight, ChevronLeft, CreditCard } from 'lucide-react';
+import { Globe, LogOut, User, Shield, Bell, HelpCircle, ChevronRight, ChevronLeft, CreditCard, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
@@ -17,44 +17,48 @@ const ClientProfile = () => {
   };
 
   const menuItems = [
-    { icon: User, label: isAr ? 'تعديل الملف الشخصي' : 'Edit Profile' },
-    { icon: CreditCard, label: isAr ? 'طرق الدفع' : 'Payment Methods' },
-    { icon: Bell, label: isAr ? 'التنبيهات' : 'Notifications' },
-    { icon: Shield, label: isAr ? 'الخصوصية والأمان' : 'Privacy & Security' },
-    { icon: HelpCircle, label: isAr ? 'مركز المساعدة' : 'Help Center' },
+    { icon: User, label: isAr ? 'تعديل الملف الشخصي' : 'Identity Config', color: 'text-blue-400' },
+    { icon: CreditCard, label: isAr ? 'طرق الدفع' : 'Payment Protocols', color: 'text-emerald-400' },
+    { icon: Bell, label: isAr ? 'التنبيهات' : 'Neural Alerts', color: 'text-orange-400' },
+    { icon: Shield, label: isAr ? 'الخصوصية والأمان' : 'Security Matrix', color: 'text-indigo-400' },
+    { icon: HelpCircle, label: isAr ? 'مركز المساعدة' : 'Support Node', color: 'text-pink-400' },
   ];
 
   return (
     <MobileLayout>
       <div className="p-6 space-y-8">
-        <header className="text-center space-y-4">
+        <header className="text-center space-y-6 pt-4">
           <div className="relative inline-block">
-            <div className="w-24 h-24 rounded-full bg-orange-100 border-4 border-white shadow-lg overflow-hidden mx-auto">
-              <img src="https://i.pravatar.cc/150?u=client" alt="avatar" />
+            <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full blur-xl opacity-30 animate-pulse" />
+            <div className="w-28 h-28 rounded-[2.5rem] glass p-1 border-teal-500/30 relative">
+              <img src="https://i.pravatar.cc/150?u=client" alt="avatar" className="w-full h-full rounded-[2.2rem] object-cover" />
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-teal-500 rounded-xl flex items-center justify-center border-4 border-[#02040a] shadow-lg">
+                <Zap size={14} className="text-white fill-white" />
+              </div>
             </div>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">سارة الأحمد</h1>
-            <p className="text-slate-500 text-sm">sara@example.com</p>
+            <h1 className="text-3xl font-black text-white tracking-tight">سارة الأحمد</h1>
+            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] mt-1">Client Node #8291</p>
           </div>
         </header>
 
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-slate-800 px-2">{isAr ? 'الإعدادات' : 'Settings'}</h2>
+        <section className="space-y-6">
+          <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400 px-2">{isAr ? 'الإعدادات' : 'System Config'}</h2>
           
-          <Card className="overflow-hidden border-none shadow-sm">
+          <Card className="overflow-hidden glass border-white/5 rounded-[2.5rem]">
             <button 
               onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
-              className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+              className="w-full p-5 flex items-center justify-between hover:bg-white/5 transition-colors group"
             >
               <div className="flex items-center gap-4">
-                <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                <div className="p-3 bg-blue-500/10 text-blue-400 rounded-2xl group-hover:scale-110 transition-transform">
                   <Globe size={20} />
                 </div>
-                <span className="font-medium text-slate-700">{isAr ? 'اللغة' : 'Language'}</span>
+                <span className="font-bold text-white tracking-tight">{isAr ? 'اللغة' : 'Language Sync'}</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <span className="text-sm">{isAr ? 'العربية' : 'English'}</span>
+              <div className="flex items-center gap-3 text-slate-500">
+                <span className="text-[10px] font-black uppercase tracking-widest text-teal-400">{isAr ? 'العربية' : 'English'}</span>
                 {isAr ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
               </div>
             </button>
@@ -62,15 +66,15 @@ const ClientProfile = () => {
             {menuItems.map((item, i) => (
               <button 
                 key={i}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors border-t border-slate-50"
+                className="w-full p-5 flex items-center justify-between hover:bg-white/5 transition-colors border-t border-white/5 group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-2 bg-slate-50 text-slate-600 rounded-lg">
+                  <div className={cn("p-3 bg-white/5 rounded-2xl group-hover:scale-110 transition-transform", item.color)}>
                     <item.icon size={20} />
                   </div>
-                  <span className="font-medium text-slate-700">{item.label}</span>
+                  <span className="font-bold text-white tracking-tight">{item.label}</span>
                 </div>
-                <div className="text-slate-400">
+                <div className="text-slate-600 group-hover:text-teal-400 transition-colors">
                   {isAr ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
                 </div>
               </button>
@@ -80,10 +84,10 @@ const ClientProfile = () => {
           <Button 
             variant="ghost" 
             onClick={handleLogout}
-            className="w-full h-14 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-2xl flex items-center justify-center gap-2"
+            className="w-full h-16 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-[2rem] flex items-center justify-center gap-3 font-black uppercase tracking-widest text-xs border border-transparent hover:border-red-500/20"
           >
             <LogOut size={20} />
-            {isAr ? 'تسجيل الخروج' : 'Logout'}
+            {isAr ? 'تسجيل الخروج' : 'Terminate Session'}
           </Button>
         </section>
       </div>
