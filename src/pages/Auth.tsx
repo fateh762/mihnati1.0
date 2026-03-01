@@ -6,10 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { motion } from 'framer-motion';
 import { showSuccess } from '@/utils/toast';
+import { Globe } from 'lucide-react';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const { language, setUser } = useStore();
+  const { language, setLanguage, setUser } = useStore();
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [step, setStep] = useState('phone'); // 'phone' or 'otp'
@@ -34,7 +35,19 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-white p-8 flex flex-col max-w-md mx-auto">
-      <div className="mb-12 mt-8">
+      <div className="flex justify-end mb-4">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={() => setLanguage(language === 'ar' ? 'en' : 'ar')}
+          className="text-slate-500 flex items-center gap-2"
+        >
+          <Globe size={16} />
+          {language === 'ar' ? 'English' : 'العربية'}
+        </Button>
+      </div>
+
+      <div className="mb-12 mt-4">
         <h1 className="text-3xl font-bold text-slate-800 mb-2">
           {step === 'phone' 
             ? (isAr ? 'تسجيل الدخول' : 'Login') 
