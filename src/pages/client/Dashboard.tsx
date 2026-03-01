@@ -5,12 +5,14 @@ import { motion } from 'framer-motion';
 import { Search, MapPin, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const ClientDashboard = () => {
   const { language } = useStore();
   const isAr = language === 'ar';
 
   const categories = [
+    { id: 'driver', label: isAr ? 'سائق خاص' : 'Private Driver', icon: '🚗' },
     { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist', icon: '💄' },
     { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist', icon: '💇‍♀️' },
     { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist', icon: '🎨' },
@@ -65,16 +67,19 @@ const ClientDashboard = () => {
           </div>
           <div className="grid grid-cols-3 gap-4">
             {categories.map((cat) => (
-              <motion.button
+              <Link
                 key={cat.id}
-                whileTap={{ scale: 0.95 }}
+                to="/client/post-job"
                 className="flex flex-col items-center gap-2"
               >
-                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl">
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl"
+                >
                   {cat.icon}
-                </div>
+                </motion.div>
                 <span className="text-[10px] font-medium text-slate-600 text-center line-clamp-1">{cat.label}</span>
-              </motion.button>
+              </Link>
             ))}
           </div>
         </section>

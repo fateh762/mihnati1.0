@@ -32,6 +32,7 @@ const PostJob = () => {
   });
 
   const categories = [
+    { id: 'driver', label: isAr ? 'سائق خاص' : 'Private Driver', icon: '🚗' },
     { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist', icon: '💄' },
     { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist', icon: '💇‍♀️' },
     { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist', icon: '🎨' },
@@ -128,7 +129,7 @@ const PostJob = () => {
                   <Label>{isAr ? 'عنوان الطلب' : 'Job Title'}</Label>
                   <Input 
                     className="h-12 rounded-xl" 
-                    placeholder={isAr ? 'مثال: إصلاح صنبور مياه' : 'e.g. Fix water tap'}
+                    placeholder={isAr ? 'مثال: سائق للمطار' : 'e.g. Driver to Airport'}
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
