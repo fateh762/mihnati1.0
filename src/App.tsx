@@ -13,6 +13,8 @@ import WorkerRegistration from "./pages/worker/Registration";
 import ClientRegistration from "./pages/client/Registration";
 import WorkerDashboard from "./pages/worker/Dashboard";
 import ClientDashboard from "./pages/client/Dashboard";
+import PostJob from "./pages/client/PostJob";
+import Explore from "./pages/worker/Explore";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,10 +41,12 @@ const App = () => {
             {/* Worker Routes */}
             <Route path="/worker/register" element={<WorkerRegistration />} />
             <Route path="/worker/dashboard" element={<WorkerDashboard />} />
+            <Route path="/worker/explore" element={<Explore />} />
             
             {/* Client Routes */}
             <Route path="/client/register" element={<ClientRegistration />} />
             <Route path="/client/dashboard" element={<ClientDashboard />} />
+            <Route path="/client/post-job" element={<PostJob />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
