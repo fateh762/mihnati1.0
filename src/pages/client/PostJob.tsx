@@ -33,11 +33,18 @@ const PostJob = () => {
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing', icon: '🚰' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical', icon: '⚡' },
     { id: 'it_support', label: isAr ? 'دعم فني' : 'IT Support', icon: '💻' },
-    { id: 'networks', label: isAr ? 'شبكات' : 'Networks', icon: '🌐' },
-    { id: 'smart_home', label: isAr ? 'منزل ذكي' : 'Smart Home', icon: '🏠' },
-    { id: 'security', label: isAr ? 'أنظمة أمنية' : 'Security', icon: '🛡️' },
+    { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Writing', icon: '✍️' },
+    { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content', icon: '🤳' },
+    { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering', icon: '🍲' },
+    { id: 'drivers', label: isAr ? 'سائقين' : 'Drivers', icon: '🚗' },
+    { id: 'delivery', label: isAr ? 'توصيل' : 'Delivery', icon: '📦' },
+    { id: 'moving', label: isAr ? 'نقل عفش' : 'Moving', icon: '🚛' },
+    { id: 'photography', label: isAr ? 'تصوير' : 'Photography', icon: '📸' },
+    { id: 'design', label: isAr ? 'تصميم' : 'Design', icon: '🎨' },
+    { id: 'translation', label: isAr ? 'ترجمة' : 'Translation', icon: '🌐' },
     { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair', icon: '❄️' },
-    { id: 'mobile_repair', label: isAr ? 'جوالات' : 'Mobile Repair', icon: '📱' },
+    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
+    { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring', icon: '📚' },
   ];
 
   const handleNext = () => {
@@ -70,7 +77,7 @@ const PostJob = () => {
         </h1>
       </header>
 
-      <div className="p-6 flex-1">
+      <div className="p-6 flex-1 overflow-y-auto">
         <div className="mb-8 flex justify-between items-center">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-center flex-1 last:flex-none">
@@ -100,7 +107,7 @@ const PostJob = () => {
                     )}
                   >
                     <span className="text-3xl">{cat.icon}</span>
-                    <span className="font-medium text-slate-700">{cat.label}</span>
+                    <span className="font-medium text-slate-700 text-sm">{cat.label}</span>
                   </button>
                 ))}
               </div>

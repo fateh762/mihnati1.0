@@ -18,12 +18,18 @@ const WorkerRegistration = () => {
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
     { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
-    { id: 'networks', label: isAr ? 'تركيب شبكات' : 'Network Installation' },
-    { id: 'smart_home', label: isAr ? 'أنظمة منازل ذكية' : 'Smart Home Systems' },
-    { id: 'security', label: isAr ? 'أنظمة أمنية وكاميرات' : 'Security Systems' },
-    { id: 'mobile_repair', label: isAr ? 'صيانة جوالات' : 'Mobile Repair' },
+    { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
+    { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content Creation' },
+    { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering' },
+    { id: 'drivers', label: isAr ? 'سائق' : 'Driver' },
+    { id: 'delivery', label: isAr ? 'توصيل طلبات' : 'Delivery' },
+    { id: 'moving', label: isAr ? 'نقل عفش' : 'Moving & Packing' },
+    { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
+    { id: 'design', label: isAr ? 'تصميم جرافيك' : 'Graphic Design' },
+    { id: 'translation', label: isAr ? 'ترجمة' : 'Translation' },
     { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
     { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
+    { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
   ];
 
   const handleNext = () => {
