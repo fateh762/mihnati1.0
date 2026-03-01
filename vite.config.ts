@@ -1,17 +1,27 @@
 import { defineConfig } from "vite";
 import dyadComponentTagger from "@dyad-sh/react-vite-component-tagger";
 import react from "@vitejs/plugin-react-swc";
+import legacy from "@vitejs/plugin-legacy";
 import { VitePWA } from 'vite-plugin-pwa';
 import path from "path";
 
 export default defineConfig(() => ({
+  base: './',
   server: {
     host: "::",
     port: 8080,
   },
+  build: {
+    target: 'es2015',
+    cssTarget: 'chrome61',
+    minify: 'terser',
+  },
   plugins: [
     dyadComponentTagger(), 
     react(),
+    legacy({
+      targets: ['android >= 5', 'not dead'],
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
