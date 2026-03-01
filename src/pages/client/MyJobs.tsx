@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, ChevronRight, ChevronLeft, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Link } from 'react-router-dom';
 
 const ClientJobs = () => {
   const { language } = useStore();
@@ -46,10 +47,13 @@ const ClientJobs = () => {
                     <Users size={16} />
                     {job.bidsCount} {isAr ? 'عروض مستلمة' : 'bids received'}
                   </div>
-                  <button className="text-teal-600 text-xs font-bold flex items-center gap-1">
+                  <Link 
+                    to={`/client/job/${job.id}/bids`}
+                    className="text-teal-600 text-xs font-bold flex items-center gap-1"
+                  >
                     {isAr ? 'إدارة الطلب' : 'Manage'}
                     {isAr ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
