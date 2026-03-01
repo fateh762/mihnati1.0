@@ -17,9 +17,13 @@ const WorkerRegistration = () => {
   const categories = [
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
-    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning' },
-    { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair' },
-    { id: 'carpentry', label: isAr ? 'نجارة' : 'Carpentry' },
+    { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
+    { id: 'networks', label: isAr ? 'تركيب شبكات' : 'Network Installation' },
+    { id: 'smart_home', label: isAr ? 'أنظمة منازل ذكية' : 'Smart Home Systems' },
+    { id: 'security', label: isAr ? 'أنظمة أمنية وكاميرات' : 'Security Systems' },
+    { id: 'mobile_repair', label: isAr ? 'صيانة جوالات' : 'Mobile Repair' },
+    { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
+    { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
   ];
 
   const handleNext = () => {

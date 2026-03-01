@@ -13,10 +13,13 @@ const ClientDashboard = () => {
   const categories = [
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing', icon: '🚰' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical', icon: '⚡' },
-    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
+    { id: 'it_support', label: isAr ? 'دعم فني' : 'IT Support', icon: '💻' },
+    { id: 'networks', label: isAr ? 'شبكات' : 'Networks', icon: '🌐' },
+    { id: 'smart_home', label: isAr ? 'منزل ذكي' : 'Smart Home', icon: '🏠' },
+    { id: 'security', label: isAr ? 'أنظمة أمنية' : 'Security', icon: '🛡️' },
     { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair', icon: '❄️' },
-    { id: 'moving', label: isAr ? 'نقل عفش' : 'Moving', icon: '📦' },
-    { id: 'painting', label: isAr ? 'دهانات' : 'Painting', icon: '🎨' },
+    { id: 'mobile_repair', label: isAr ? 'جوالات' : 'Mobile Repair', icon: '📱' },
+    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
   ];
 
   const featuredWorkers = [
@@ -64,7 +67,7 @@ const ClientDashboard = () => {
                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl">
                   {cat.icon}
                 </div>
-                <span className="text-xs font-medium text-slate-600">{cat.label}</span>
+                <span className="text-[10px] font-medium text-slate-600 text-center line-clamp-1">{cat.label}</span>
               </motion.button>
             ))}
           </div>

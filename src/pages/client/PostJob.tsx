@@ -32,8 +32,12 @@ const PostJob = () => {
   const categories = [
     { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing', icon: '🚰' },
     { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical', icon: '⚡' },
-    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
+    { id: 'it_support', label: isAr ? 'دعم فني' : 'IT Support', icon: '💻' },
+    { id: 'networks', label: isAr ? 'شبكات' : 'Networks', icon: '🌐' },
+    { id: 'smart_home', label: isAr ? 'منزل ذكي' : 'Smart Home', icon: '🏠' },
+    { id: 'security', label: isAr ? 'أنظمة أمنية' : 'Security', icon: '🛡️' },
     { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair', icon: '❄️' },
+    { id: 'mobile_repair', label: isAr ? 'جوالات' : 'Mobile Repair', icon: '📱' },
   ];
 
   const handleNext = () => {
