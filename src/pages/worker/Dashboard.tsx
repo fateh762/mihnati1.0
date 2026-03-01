@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Star, TrendingUp, CheckCircle, Clock, MapPin } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 const WorkerDashboard = () => {
   const { language } = useStore();

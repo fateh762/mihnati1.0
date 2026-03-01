@@ -4,6 +4,7 @@ import { useStore } from '@/store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
   const navigate = useNavigate();
