@@ -6,8 +6,9 @@ import { motion } from 'framer-motion';
 import { MapPin, Search, Filter, Clock, Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const Explore = () => {
   const { language } = useStore();
@@ -91,10 +92,10 @@ const Explore = () => {
                       4.8
                     </div>
                   </div>
-                  <button className="flex items-center gap-1 text-teal-600 font-bold text-sm">
+                  <Link to={`/worker/job/${job.id}`} className="flex items-center gap-1 text-teal-600 font-bold text-sm">
                     {isAr ? 'عرض التفاصيل' : 'View Details'}
                     {isAr ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             ))

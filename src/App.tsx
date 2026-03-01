@@ -15,6 +15,9 @@ import WorkerDashboard from "./pages/worker/Dashboard";
 import ClientDashboard from "./pages/client/Dashboard";
 import PostJob from "./pages/client/PostJob";
 import Explore from "./pages/worker/Explore";
+import JobDetails from "./pages/worker/JobDetails";
+import WorkerJobs from "./pages/worker/MyJobs";
+import ClientJobs from "./pages/client/MyJobs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,11 +45,14 @@ const App = () => {
             <Route path="/worker/register" element={<WorkerRegistration />} />
             <Route path="/worker/dashboard" element={<WorkerDashboard />} />
             <Route path="/worker/explore" element={<Explore />} />
+            <Route path="/worker/job/:id" element={<JobDetails />} />
+            <Route path="/worker/jobs" element={<WorkerJobs />} />
             
             {/* Client Routes */}
             <Route path="/client/register" element={<ClientRegistration />} />
             <Route path="/client/dashboard" element={<ClientDashboard />} />
             <Route path="/client/post-job" element={<PostJob />} />
+            <Route path="/client/jobs" element={<ClientJobs />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
