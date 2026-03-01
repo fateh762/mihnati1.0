@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
-import { useJobStore } from '@/store/useJobStore';
+import { useJobStore, Job } from '@/store/useJobStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -50,12 +50,15 @@ const PostJob = () => {
   const handleNext = () => {
     if (step < 4) setStep(step + 1);
     else {
-      const newJob = {
+      const newJob: Job = {
         id: Math.random().toString(36).substr(2, 9),
         clientId: 'current-user',
-        ...formData,
+        category: formData.category,
+        title: formData.title,
+        description: formData.description,
+        priceType: formData.priceType as 'fixed' | 'bidding',
         price: formData.price ? parseInt(formData.price) : undefined,
-        status: 'open' as const,
+        status: 'open',
         createdAt: new Date().toISOString(),
         bidsCount: 0,
         location: { lat: 24.7136, lng: 46.6753, address: formData.location }
@@ -177,7 +180,7 @@ const PostJob = () => {
               <h2 className="text-lg font-bold text-slate-800">{isAr ? 'خيارات التسعير' : 'Pricing Options'}</h2>
               <RadioGroup 
                 value={formData.priceType} 
-                onValueChange={(val) => setFormData({ ...formData, priceType: val as 'fixed' | 'bidding' })}
+                onValueChange={(val) => setFormData({ ...formData, priceType: val })}
                 className="grid gap-4"
               >
                 <Label
