@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Star, MapPin, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Star, MapPin, MessageCircle, CheckCircle2, Zap } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 
 const JobBids = () => {
@@ -33,20 +33,22 @@ const JobBids = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col max-w-md mx-auto">
-      <header className="p-6 bg-white border-b border-slate-100 flex items-center justify-between sticky top-0 z-10">
-        <button onClick={() => navigate(-1)} className="p-2 hover:bg-slate-50 rounded-full">
+    <div className="min-h-screen bg-[#02040a] flex flex-col max-w-md mx-auto relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+      
+      <header className="p-6 glass border-b border-white/5 flex items-center justify-between sticky top-0 z-20">
+        <button onClick={() => navigate(-1)} className="p-2 text-slate-400 hover:text-white transition-colors">
           {isAr ? <ChevronRight /> : <ChevronLeft />}
         </button>
-        <h1 className="text-lg font-bold text-slate-800">{isAr ? 'العروض المستلمة' : 'Received Bids'}</h1>
+        <h1 className="text-lg font-black text-white tracking-tight uppercase">{isAr ? 'العروض المستلمة' : 'Neural Proposals'}</h1>
         <div className="w-10" />
       </header>
 
-      <div className="p-6 space-y-6 overflow-y-auto flex-1">
-        <div className="space-y-2">
-          <Badge className="bg-orange-50 text-orange-700 border-none">{job.category}</Badge>
-          <h2 className="text-xl font-bold text-slate-800">{job.title}</h2>
-          <p className="text-sm text-slate-500">{mockBids.length} {isAr ? 'عروض متوفرة' : 'bids available'}</p>
+      <div className="p-6 space-y-8 overflow-y-auto flex-1 relative z-10">
+        <div className="space-y-3">
+          <Badge className="bg-orange-500/10 text-orange-400 border-none text-[9px] font-black uppercase tracking-widest">{job.category}</Badge>
+          <h2 className="text-2xl font-black text-white tracking-tight">{job.title}</h2>
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{mockBids.length} {isAr ? 'عروض متوفرة' : 'active proposals'}</p>
         </div>
 
         <div className="space-y-4">
@@ -56,22 +58,27 @@ const JobBids = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card className="p-5 border-none shadow-sm space-y-4">
+              <Card className="p-6 glass border-white/5 rounded-[2.5rem] space-y-6 group hover:border-teal-500/30 transition-all">
                 <div className="flex items-center gap-4">
-                  <img src={bid.image} className="w-14 h-14 rounded-2xl object-cover" alt={bid.name} />
+                  <div className="relative">
+                    <img src={bid.image} className="w-16 h-16 rounded-2xl object-cover border border-white/10" alt={bid.name} />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-teal-500 rounded-lg flex items-center justify-center border-2 border-[#02040a]">
+                      <Zap size={12} className="text-white fill-white" />
+                    </div>
+                  </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-slate-800">{bid.name}</h3>
+                    <h3 className="font-bold text-white group-hover:text-teal-400 transition-colors">{bid.name}</h3>
                     <div className="flex items-center gap-3 mt-1">
-                      <div className="flex items-center gap-1 text-amber-500 text-xs font-bold">
+                      <div className="flex items-center gap-1 text-amber-400 text-[10px] font-black uppercase tracking-widest">
                         <Star size={12} fill="currentColor" /> {bid.rating}
                       </div>
-                      <span className="text-[10px] text-slate-400">{bid.reviews} {isAr ? 'تقييم' : 'reviews'}</span>
+                      <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">{bid.reviews} {isAr ? 'تقييم' : 'reviews'}</span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-teal-600 font-bold text-lg">{bid.price}</div>
-                    <div className="text-[10px] text-slate-400 flex items-center gap-1 justify-end">
-                      <MapPin size={10} /> {bid.distance}
+                    <div className="text-teal-400 font-black text-xl">{bid.price}</div>
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1 justify-end">
+                      <MapPin size={10} className="text-teal-500" /> {bid.distance}
                     </div>
                   </div>
                 </div>
@@ -79,17 +86,17 @@ const JobBids = () => {
                 <div className="flex gap-3 pt-2">
                   <Button 
                     variant="outline" 
-                    className="flex-1 h-11 rounded-xl border-slate-200 text-slate-600 gap-2"
+                    className="flex-1 h-12 rounded-xl border-white/5 glass text-slate-400 hover:text-teal-400 font-black text-[10px] uppercase tracking-widest gap-2"
                   >
                     <MessageCircle size={18} />
-                    {isAr ? 'دردشة' : 'Chat'}
+                    {isAr ? 'دردشة' : 'Sync'}
                   </Button>
                   <Button 
                     onClick={() => handleAcceptBid(bid.name)}
-                    className="flex-1 h-11 bg-teal-600 hover:bg-teal-700 rounded-xl gap-2"
+                    className="flex-1 h-12 bg-teal-500 hover:bg-teal-400 text-white rounded-xl font-black text-[10px] uppercase tracking-widest gap-2 shadow-[0_0_20px_rgba(20,184,166,0.2)]"
                   >
                     <CheckCircle2 size={18} />
-                    {isAr ? 'قبول العرض' : 'Accept'}
+                    {isAr ? 'قبول العرض' : 'Authorize'}
                   </Button>
                 </div>
               </Card>

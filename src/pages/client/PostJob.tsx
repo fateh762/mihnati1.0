@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Camera, MapPin, Clock, Info } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Camera, MapPin, Clock, Info, Zap } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +27,7 @@ const PostJob = () => {
     description: '',
     priceType: 'fixed' as 'fixed' | 'bidding',
     price: '',
-    location: 'حي الملقا، الرياض',
+    location: isAr ? 'حي الملقا، الرياض' : 'Al Malqa, Riyadh',
     time: 'ASAP'
   });
 
@@ -74,27 +74,29 @@ const PostJob = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col max-w-md mx-auto">
-      <header className="p-6 bg-white border-b border-slate-100 flex items-center gap-4">
-        <button onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}>
+    <div className="min-h-screen bg-[#02040a] flex flex-col max-w-md mx-auto relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+      
+      <header className="p-6 glass border-b border-white/5 flex items-center gap-4 sticky top-0 z-20">
+        <button onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)} className="text-slate-400 hover:text-white transition-colors">
           {isAr ? <ChevronRight /> : <ChevronLeft />}
         </button>
-        <h1 className="text-xl font-bold text-slate-800">
-          {isAr ? 'نشر طلب جديد' : 'Post New Job'}
+        <h1 className="text-xl font-black text-white tracking-tight">
+          {isAr ? 'نشر طلب جديد' : 'Deploy New Task'}
         </h1>
       </header>
 
-      <div className="p-6 flex-1 overflow-y-auto">
-        <div className="mb-8 flex justify-between items-center">
+      <div className="p-6 flex-1 overflow-y-auto relative z-10">
+        <div className="mb-10 flex justify-between items-center px-2">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-center flex-1 last:flex-none">
               <div className={cn(
-                "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors",
-                step >= i ? "bg-teal-600 text-white" : "bg-slate-200 text-slate-500"
+                "w-8 h-8 rounded-xl flex items-center justify-center text-[10px] font-black transition-all duration-500",
+                step >= i ? "bg-teal-500 text-white shadow-[0_0_15px_rgba(20,184,166,0.5)]" : "bg-white/5 text-slate-600 border border-white/5"
               )}>
                 {i}
               </div>
-              {i < 4 && <div className={cn("h-1 flex-1 mx-2 rounded-full", step > i ? "bg-teal-600" : "bg-slate-200")} />}
+              {i < 4 && <div className={cn("h-0.5 flex-1 mx-2 rounded-full transition-all duration-500", step > i ? "bg-teal-500" : "bg-white/5")} />}
             </div>
           ))}
         </div>
@@ -102,19 +104,21 @@ const PostJob = () => {
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-              <h2 className="text-lg font-bold text-slate-800">{isAr ? 'اختر التصنيف' : 'Select Category'}</h2>
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'اختر التصنيف' : 'Select Protocol'}</h2>
               <div className="grid grid-cols-2 gap-4">
                 {categories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setFormData({ ...formData, category: cat.id })}
                     className={cn(
-                      "p-6 rounded-2xl border-2 transition-all flex flex-col items-center gap-3",
-                      formData.category === cat.id ? "border-teal-600 bg-teal-50" : "border-white bg-white shadow-sm"
+                      "p-6 rounded-[2rem] border transition-all duration-300 flex flex-col items-center gap-3 group",
+                      formData.category === cat.id 
+                        ? "border-teal-500/50 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.1)]" 
+                        : "border-white/5 glass hover:border-white/10"
                     )}
                   >
-                    <span className="text-3xl">{cat.icon}</span>
-                    <span className="font-medium text-slate-700 text-sm">{cat.label}</span>
+                    <span className="text-3xl group-hover:scale-110 transition-transform">{cat.icon}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">{cat.label}</span>
                   </button>
                 ))}
               </div>
@@ -123,29 +127,29 @@ const PostJob = () => {
 
           {step === 2 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-              <h2 className="text-lg font-bold text-slate-800">{isAr ? 'تفاصيل الطلب' : 'Job Details'}</h2>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label>{isAr ? 'عنوان الطلب' : 'Job Title'}</Label>
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'تفاصيل الطلب' : 'Task Parameters'}</h2>
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{isAr ? 'عنوان الطلب' : 'Task Title'}</Label>
                   <Input 
-                    className="h-12 rounded-xl" 
+                    className="h-14 rounded-2xl bg-white/5 border-white/5 text-white placeholder:text-slate-700 focus:ring-teal-500/50" 
                     placeholder={isAr ? 'مثال: سائق للمطار' : 'e.g. Driver to Airport'}
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>{isAr ? 'الوصف' : 'Description'}</Label>
+                <div className="space-y-3">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{isAr ? 'الوصف' : 'Data Description'}</Label>
                   <Textarea 
-                    className="rounded-xl min-h-[120px]" 
-                    placeholder={isAr ? 'اشرح المشكلة بالتفصيل...' : 'Describe the issue in detail...'}
+                    className="rounded-2xl min-h-[140px] bg-white/5 border-white/5 text-white placeholder:text-slate-700 focus:ring-teal-500/50" 
+                    placeholder={isAr ? 'اشرح المشكلة بالتفصيل...' : 'Describe the requirements in detail...'}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
-                <div className="p-8 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center gap-2 text-slate-400 bg-white">
+                <div className="p-10 border-2 border-dashed border-white/5 rounded-[2rem] flex flex-col items-center gap-3 text-slate-600 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
                   <Camera size={32} />
-                  <span className="text-sm">{isAr ? 'إضافة صور (اختياري)' : 'Add Photos (Optional)'}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest">{isAr ? 'إضافة صور (اختياري)' : 'Upload Visual Data'}</span>
                 </div>
               </div>
             </motion.div>
@@ -153,27 +157,27 @@ const PostJob = () => {
 
           {step === 3 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-              <h2 className="text-lg font-bold text-slate-800">{isAr ? 'الموقع والوقت' : 'Location & Time'}</h2>
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'الموقع والوقت' : 'Spatio-Temporal Sync'}</h2>
               <div className="space-y-4">
-                <div className="p-4 bg-white rounded-2xl shadow-sm flex items-center gap-4 border border-slate-100">
-                  <div className="p-3 bg-teal-50 text-teal-600 rounded-xl">
+                <div className="p-5 glass rounded-[2rem] flex items-center gap-4 border border-white/5">
+                  <div className="p-3 bg-teal-500/10 text-teal-400 rounded-2xl">
                     <MapPin size={24} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-slate-400">{isAr ? 'موقع العمل' : 'Job Location'}</p>
-                    <p className="font-medium text-slate-800">{formData.location}</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-500">{isAr ? 'موقع العمل' : 'Target Location'}</p>
+                    <p className="font-bold text-white text-sm">{formData.location}</p>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-teal-600">{isAr ? 'تغيير' : 'Change'}</Button>
+                  <Button variant="ghost" size="sm" className="text-teal-400 font-black text-[10px] uppercase tracking-widest">{isAr ? 'تغيير' : 'Modify'}</Button>
                 </div>
-                <div className="p-4 bg-white rounded-2xl shadow-sm flex items-center gap-4 border border-slate-100">
-                  <div className="p-3 bg-orange-50 text-orange-600 rounded-xl">
+                <div className="p-5 glass rounded-[2rem] flex items-center gap-4 border border-white/5">
+                  <div className="p-3 bg-orange-500/10 text-orange-400 rounded-2xl">
                     <Clock size={24} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs text-slate-400">{isAr ? 'الموعد المفضل' : 'Preferred Time'}</p>
-                    <p className="font-medium text-slate-800">{isAr ? 'في أقرب وقت' : 'As soon as possible'}</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-500">{isAr ? 'الموعد المفضل' : 'Execution Time'}</p>
+                    <p className="font-bold text-white text-sm">{isAr ? 'في أقرب وقت' : 'Immediate Sync'}</p>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-teal-600">{isAr ? 'تغيير' : 'Change'}</Button>
+                  <Button variant="ghost" size="sm" className="text-teal-400 font-black text-[10px] uppercase tracking-widest">{isAr ? 'تغيير' : 'Modify'}</Button>
                 </div>
               </div>
             </motion.div>
@@ -181,7 +185,7 @@ const PostJob = () => {
 
           {step === 4 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-              <h2 className="text-lg font-bold text-slate-800">{isAr ? 'خيارات التسعير' : 'Pricing Options'}</h2>
+              <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'خيارات التسعير' : 'Credit Allocation'}</h2>
               <RadioGroup 
                 value={formData.priceType} 
                 onValueChange={(val: 'fixed' | 'bidding') => setFormData({ ...formData, priceType: val })}
@@ -189,41 +193,41 @@ const PostJob = () => {
               >
                 <Label
                   className={cn(
-                    "flex items-center justify-between p-6 rounded-2xl border-2 cursor-pointer transition-all",
-                    formData.priceType === 'fixed' ? "border-teal-600 bg-teal-50" : "border-white bg-white shadow-sm"
+                    "flex items-center justify-between p-6 rounded-[2rem] border transition-all cursor-pointer",
+                    formData.priceType === 'fixed' ? "border-teal-500/50 bg-teal-500/10" : "border-white/5 glass"
                   )}
                 >
                   <div className="flex items-center gap-4">
-                    <RadioGroupItem value="fixed" />
+                    <RadioGroupItem value="fixed" className="border-teal-500 text-teal-500" />
                     <div>
-                      <p className="font-bold text-slate-800">{isAr ? 'سعر ثابت' : 'Fixed Price'}</p>
-                      <p className="text-xs text-slate-500">{isAr ? 'حدد ميزانيتك للعمل' : 'Set your budget for the job'}</p>
+                      <p className="font-black text-white uppercase tracking-tight">{isAr ? 'سعر ثابت' : 'Fixed Credits'}</p>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{isAr ? 'حدد ميزانيتك للعمل' : 'Set static budget'}</p>
                     </div>
                   </div>
                 </Label>
 
                 <Label
                   className={cn(
-                    "flex items-center justify-between p-6 rounded-2xl border-2 cursor-pointer transition-all",
-                    formData.priceType === 'bidding' ? "border-teal-600 bg-teal-50" : "border-white bg-white shadow-sm"
+                    "flex items-center justify-between p-6 rounded-[2rem] border transition-all cursor-pointer",
+                    formData.priceType === 'bidding' ? "border-teal-500/50 bg-teal-500/10" : "border-white/5 glass"
                   )}
                 >
                   <div className="flex items-center gap-4">
-                    <RadioGroupItem value="bidding" />
+                    <RadioGroupItem value="bidding" className="border-teal-500 text-teal-500" />
                     <div>
-                      <p className="font-bold text-slate-800">{isAr ? 'نظام المزايدة' : 'Bidding System'}</p>
-                      <p className="text-xs text-slate-500">{isAr ? 'دع الفنيين يقدمون عروضهم' : 'Let experts propose their prices'}</p>
+                      <p className="font-black text-white uppercase tracking-tight">{isAr ? 'نظام المزايدة' : 'Neural Bidding'}</p>
+                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{isAr ? 'دع الفنيين يقدمون عروضهم' : 'Open for expert proposals'}</p>
                     </div>
                   </div>
                 </Label>
               </RadioGroup>
 
               {formData.priceType === 'fixed' && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
-                  <Label>{isAr ? 'الميزانية (ريال)' : 'Budget (SAR)'}</Label>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{isAr ? 'الميزانية (ريال)' : 'Budget (SAR)'}</Label>
                   <Input 
                     type="number" 
-                    className="h-14 text-2xl font-bold rounded-xl" 
+                    className="h-16 text-3xl font-black rounded-2xl bg-white/5 border-white/5 text-white focus:ring-teal-500/50 text-center" 
                     placeholder="0.00"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
@@ -231,22 +235,22 @@ const PostJob = () => {
                 </motion.div>
               )}
 
-              <div className="p-4 bg-blue-50 rounded-2xl flex gap-3 text-blue-800 text-sm">
+              <div className="p-5 glass rounded-[2rem] flex gap-4 text-teal-400 text-[10px] font-bold uppercase tracking-widest border border-teal-500/20">
                 <Info className="shrink-0" size={20} />
-                <p>{isAr ? 'سيتم إضافة رسوم توصيل بسيطة بناءً على مسافة الفني.' : 'A small transport fee will be added based on the expert\'s distance.'}</p>
+                <p className="leading-relaxed">{isAr ? 'سيتم إضافة رسوم توصيل بسيطة بناءً على مسافة الفني.' : 'Transport credits will be calculated based on expert proximity.'}</p>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <div className="p-6 bg-white border-t border-slate-100">
+      <div className="p-6 glass border-t border-white/5 sticky bottom-0 z-20">
         <Button 
           onClick={handleNext}
           disabled={step === 1 && !formData.category}
-          className="w-full h-14 bg-teal-600 hover:bg-teal-700 rounded-xl text-lg shadow-lg"
+          className="w-full h-16 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl text-lg font-black uppercase tracking-widest shadow-[0_0_30px_rgba(20,184,166,0.3)] border-t border-white/20"
         >
-          {step === 4 ? (isAr ? 'تأكيد ونشر' : 'Confirm & Post') : (isAr ? 'التالي' : 'Next')}
+          {step === 4 ? (isAr ? 'تأكيد ونشر' : 'Confirm & Deploy') : (isAr ? 'التالي' : 'Next Phase')}
         </Button>
       </div>
     </div>
