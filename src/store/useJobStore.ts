@@ -13,6 +13,7 @@ export interface Job {
   createdAt: string;
   distance?: string;
   bidsCount: number;
+  time?: string;
 }
 
 interface JobState {

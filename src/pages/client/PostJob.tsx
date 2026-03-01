@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
@@ -23,7 +25,7 @@ const PostJob = () => {
     category: '',
     title: '',
     description: '',
-    priceType: 'fixed',
+    priceType: 'fixed' as 'fixed' | 'bidding',
     price: '',
     location: 'حي الملقا، الرياض',
     time: 'ASAP'
@@ -56,12 +58,13 @@ const PostJob = () => {
         category: formData.category,
         title: formData.title,
         description: formData.description,
-        priceType: formData.priceType as 'fixed' | 'bidding',
+        priceType: formData.priceType,
         price: formData.price ? parseInt(formData.price) : undefined,
         status: 'open',
         createdAt: new Date().toISOString(),
         bidsCount: 0,
-        location: { lat: 24.7136, lng: 46.6753, address: formData.location }
+        location: { lat: 24.7136, lng: 46.6753, address: formData.location },
+        time: formData.time
       };
       addJob(newJob);
       showSuccess(isAr ? 'تم نشر الطلب بنجاح' : 'Job posted successfully');
@@ -180,7 +183,7 @@ const PostJob = () => {
               <h2 className="text-lg font-bold text-slate-800">{isAr ? 'خيارات التسعير' : 'Pricing Options'}</h2>
               <RadioGroup 
                 value={formData.priceType} 
-                onValueChange={(val) => setFormData({ ...formData, priceType: val })}
+                onValueChange={(val: 'fixed' | 'bidding') => setFormData({ ...formData, priceType: val })}
                 className="grid gap-4"
               >
                 <Label
