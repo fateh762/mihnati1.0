@@ -3,7 +3,7 @@ import MobileLayout from '@/components/MobileLayout';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Globe, LogOut, User, Shield, Bell, HelpCircle, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Globe, LogOut, User, Shield, Bell, HelpCircle, ChevronRight, ChevronLeft, BarChart2, Star, Image, CreditCard, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const WorkerProfile = () => {
@@ -17,10 +17,15 @@ const WorkerProfile = () => {
   };
 
   const menuItems = [
-    { icon: User, label: isAr ? 'تعديل الملف الشخصي' : 'Edit Profile' },
-    { icon: Bell, label: isAr ? 'التنبيهات' : 'Notifications' },
-    { icon: Shield, label: isAr ? 'الخصوصية والأمان' : 'Privacy & Security' },
-    { icon: HelpCircle, label: isAr ? 'مركز المساعدة' : 'Help Center' },
+    { icon: User, label: isAr ? 'تعديل الملف الشخصي' : 'Edit Profile', path: '/worker/portfolio' },
+    { icon: Star, label: isAr ? 'تقييماتي' : 'My Reviews', path: '/worker/reviews' },
+    { icon: BarChart2, label: isAr ? 'التحليلات' : 'Analytics', path: '/worker/analytics' },
+    { icon: CreditCard, label: isAr ? 'المحفظة والمدفوعات' : 'Wallet & Payments', path: '/worker/payments' },
+    { icon: Image, label: isAr ? 'معرض أعمالي' : 'Portfolio', path: '/worker/portfolio' },
+    { icon: AlertCircle, label: isAr ? 'مركز النزاعات' : 'Dispute Center', path: '/disputes' },
+    { icon: Bell, label: isAr ? 'الإشعارات' : 'Notifications', path: '/notifications' },
+    { icon: Shield, label: isAr ? 'الخصوصية والأمان' : 'Privacy & Security', path: null },
+    { icon: HelpCircle, label: isAr ? 'مركز المساعدة' : 'Help Center', path: null },
   ];
 
   return (
@@ -61,6 +66,7 @@ const WorkerProfile = () => {
             {menuItems.map((item, i) => (
               <button 
                 key={i}
+                onClick={() => item.path && navigate(item.path)}
                 className="w-full p-4 flex items-center justify-between hover:bg-slate-50 transition-colors border-t border-slate-50"
               >
                 <div className="flex items-center gap-4">

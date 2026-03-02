@@ -1,13 +1,16 @@
 import React from 'react';
 import { useStore } from '@/store/useStore';
-import { Home, Search, Briefcase, User, Wallet, PlusCircle, MessageSquare } from 'lucide-react';
+import { useNotificationStore } from '@/store/useNotificationStore';
+import { Home, Search, Briefcase, User, Wallet, PlusCircle, MessageSquare, Bell } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
-const MobileLayout = ({ children }: { children: React.Node }) => {
+const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   const { userType, language } = useStore();
+  const { notifications } = useNotificationStore();
   const location = useLocation();
   const isAr = language === 'ar';
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const navItems = userType === 'worker' ? [
     { icon: Home, label: isAr ? 'الرئيسية' : 'Home', path: '/worker/dashboard' },
@@ -30,6 +33,17 @@ const MobileLayout = ({ children }: { children: React.Node }) => {
       <div className="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <main className="flex-1 pb-24 overflow-y-auto relative z-10">
+        {/* Notification Bell - floating top right */}
+        <div className="absolute top-4 right-4 z-30">
+          <Link to="/notifications" className="relative flex items-center justify-center w-10 h-10 glass rounded-full border-white/5 text-slate-400 hover:text-teal-400 transition-colors">
+            <Bell size={18} />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-teal-500 text-white text-[9px] font-black rounded-full flex items-center justify-center shadow-lg">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </Link>
+        </div>
         {children}
       </main>
       

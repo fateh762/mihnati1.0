@@ -29,6 +29,17 @@ import Chat from "./pages/Chat";
 import Review from "./pages/client/Review";
 import NotFound from "./pages/NotFound";
 
+// New feature pages
+import Notifications from "./pages/Notifications";
+import WorkerPayments from "./pages/worker/Payments";
+import WorkerAnalytics from "./pages/worker/Analytics";
+import WorkerReviews from "./pages/worker/Reviews";
+import WorkerPortfolio from "./pages/worker/Portfolio";
+import SearchFilters from "./pages/worker/SearchFilters";
+import Disputes from "./pages/Disputes";
+import DisputeNew from "./pages/DisputeNew";
+import VideoCall from "./pages/VideoCall";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -53,15 +64,24 @@ const App = () => {
             {/* Shared Routes */}
             <Route path="/messages" element={<Messages />} />
             <Route path="/chat/:id" element={<Chat />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/disputes" element={<Disputes />} />
+            <Route path="/disputes/new" element={<DisputeNew />} />
+            <Route path="/call/:id" element={<VideoCall />} />
             
             {/* Worker Routes */}
             <Route path="/worker/register" element={<WorkerRegistration />} />
             <Route path="/worker/dashboard" element={<WorkerDashboard />} />
             <Route path="/worker/explore" element={<Explore />} />
+            <Route path="/worker/search" element={<SearchFilters />} />
             <Route path="/worker/job/:id" element={<JobDetails />} />
             <Route path="/worker/jobs" element={<WorkerJobs />} />
             <Route path="/worker/job/:id/navigation" element={<Navigation />} />
             <Route path="/worker/earnings" element={<WorkerEarnings />} />
+            <Route path="/worker/payments" element={<WorkerPayments />} />
+            <Route path="/worker/analytics" element={<WorkerAnalytics />} />
+            <Route path="/worker/reviews" element={<WorkerReviews />} />
+            <Route path="/worker/portfolio" element={<WorkerPortfolio />} />
             <Route path="/worker/profile" element={<WorkerProfile />} />
             
             {/* Client Routes */}
