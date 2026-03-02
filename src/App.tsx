@@ -29,6 +29,15 @@ import Chat from "./pages/Chat";
 import Review from "./pages/client/Review";
 import NotFound from "./pages/NotFound";
 
+import PaymentsPage from "./features/payments/pages/PaymentsPage";
+import NotificationsPage from "./features/notifications/pages/NotificationsPage";
+import SearchPage from "./features/search/pages/SearchPage";
+import ReviewsPage from "./features/ratings/pages/ReviewsPage";
+import AnalyticsPage from "./features/analytics/pages/AnalyticsPage";
+import DisputesPage from "./features/disputes/pages/DisputesPage";
+import MediaPage from "./features/media/pages/MediaPage";
+import CallsPage from "./features/calls/pages/CallsPage";
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -73,6 +82,16 @@ const App = () => {
             <Route path="/client/job/:id/tracking" element={<Tracking />} />
             <Route path="/client/job/:id/review" element={<Review />} />
             <Route path="/client/profile" element={<ClientProfile />} />
+            
+            {/* Feature Routes */}
+            <Route path="/payments" element={<PaymentsPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/disputes" element={<DisputesPage />} />
+            <Route path="/media" element={<MediaPage />} />
+            <Route path="/calls" element={<CallsPage />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
