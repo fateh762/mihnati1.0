@@ -17,7 +17,7 @@ export default function ImageUploader({ onUploaded }: Props) {
 
   const onDrop = useCallback((accepted: File[]) => {
     const newFiles: MediaFile[] = accepted.map(f => ({
-      id: Date.now().toString() + Math.random(),
+      id: crypto.randomUUID(),
       url: URL.createObjectURL(f),
       name: f.name,
       size: f.size,

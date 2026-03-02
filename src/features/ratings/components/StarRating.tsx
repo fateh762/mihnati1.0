@@ -20,7 +20,7 @@ export default function StarRating({ value, onChange, size = 'md', readonly = fa
         <motion.button
           key={star}
           type="button"
-          whileScale={!readonly ? { scale: 1.2 } : undefined}
+          whileTap={!readonly ? { scale: 1.2 } : undefined}
           onClick={() => !readonly && onChange?.(star)}
           onMouseEnter={() => !readonly && setHovered(star)}
           onMouseLeave={() => !readonly && setHovered(0)}

@@ -1,11 +1,16 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { useMediaStore } from '../store/useMediaStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function MediaPreview() {
   const { previewFile, files, setPreview } = useMediaStore();
-  const [currentIndex, setCurrentIndex] = useState(() => files.findIndex(f => f.id === previewFile?.id));
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const idx = files.findIndex(f => f.id === previewFile?.id);
+    setCurrentIndex(idx >= 0 ? idx : 0);
+  }, [previewFile, files]);
 
   const current = files[currentIndex] ?? previewFile;
 

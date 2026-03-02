@@ -54,7 +54,7 @@ export default function VoiceCallInterface() {
           <button onClick={toggleMute} className={`p-4 rounded-full transition-colors ${isMuted ? 'bg-red-500' : 'bg-white/10 hover:bg-white/20'}`}>
             {isMuted ? <MicOff className="w-6 h-6 text-white" /> : <Mic className="w-6 h-6 text-white" />}
           </button>
-          <span className="text-slate-500 text-xs">{isMuted ? (isAr ? 'كتم' : 'Unmute') : (isAr ? 'صامت' : 'Mute')}</span>
+          <span className="text-slate-500 text-xs">{isMuted ? (isAr ? 'إلغاء الكتم' : 'Unmute') : (isAr ? 'كتم' : 'Mute')}</span>
         </div>
       </div>
     </motion.div>
