@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { generateId } from '@/lib/utils';
 import { Dispute, DisputeReason } from '../types';
 
 const mockDisputes: Dispute[] = [
@@ -37,7 +38,7 @@ export const useDisputeStore = create<DisputeState>((set) => ({
     set({ isLoading: true });
     await new Promise(r => setTimeout(r, 1000));
     const newDispute: Dispute = {
-      id: Date.now().toString(),
+      id: generateId(),
       ...data,
       jobTitle: 'Job #' + data.jobId,
       jobTitleAr: 'وظيفة #' + data.jobId,

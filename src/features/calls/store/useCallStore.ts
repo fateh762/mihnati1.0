@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { generateId } from '@/lib/utils';
 import { Call, CallType } from '../types';
 
 const mockHistory: Call[] = [
@@ -27,7 +28,7 @@ export const useCallStore = create<CallState>((set, get) => ({
   isVideoOff: false,
 
   startCall: (participantId, participantName, type) => {
-    const call: Call = { id: Date.now().toString(), type, status: 'active', participantId, participantName, startedAt: new Date().toISOString() };
+    const call: Call = { id: generateId(), type, status: 'active', participantId, participantName, startedAt: new Date().toISOString() };
     set({ activeCall: call });
   },
 

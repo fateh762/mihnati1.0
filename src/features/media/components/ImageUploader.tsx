@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
 import { Upload, Image } from 'lucide-react';
 import { useStore } from '@/store/useStore';
+import { generateId } from '@/lib/utils';
 import { useMediaStore } from '../store/useMediaStore';
 import { MediaFile } from '../types';
 
@@ -17,7 +18,7 @@ export default function ImageUploader({ onUploaded }: Props) {
 
   const onDrop = useCallback((accepted: File[]) => {
     const newFiles: MediaFile[] = accepted.map(f => ({
-      id: crypto.randomUUID(),
+      id: generateId(),
       url: URL.createObjectURL(f),
       name: f.name,
       size: f.size,

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { generateId } from '@/lib/utils';
 import { Review, RatingBreakdown } from '../types';
 
 const mockReviews: Review[] = [
@@ -29,7 +30,7 @@ export const useRatingStore = create<RatingState>((set) => ({
   submitReview: async (review) => {
     set({ isLoading: true });
     await new Promise(r => setTimeout(r, 800));
-    const newReview: Review = { ...review, id: Date.now().toString(), createdAt: new Date().toISOString(), isVerified: true };
+    const newReview: Review = { ...review, id: generateId(), createdAt: new Date().toISOString(), isVerified: true };
     set(s => ({
       reviews: [newReview, ...s.reviews],
       isLoading: false,

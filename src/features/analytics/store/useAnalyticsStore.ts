@@ -2,12 +2,12 @@ import { create } from 'zustand';
 import { EarningsData, PerformanceMetric, RevenueCategory, CompletionData, DateRange } from '../types';
 
 const mockEarnings: EarningsData[] = [
-  { month: 'Aug', earnings: 1200, jobs: 8 },
-  { month: 'Sep', earnings: 1800, jobs: 12 },
-  { month: 'Oct', earnings: 1400, jobs: 10 },
-  { month: 'Nov', earnings: 2200, jobs: 15 },
-  { month: 'Dec', earnings: 1900, jobs: 13 },
-  { month: 'Jan', earnings: 2800, jobs: 18 },
+  { month: 'Aug 2025', earnings: 1200, jobs: 8 },
+  { month: 'Sep 2025', earnings: 1800, jobs: 12 },
+  { month: 'Oct 2025', earnings: 1400, jobs: 10 },
+  { month: 'Nov 2025', earnings: 2200, jobs: 15 },
+  { month: 'Dec 2025', earnings: 1900, jobs: 13 },
+  { month: 'Jan 2026', earnings: 2800, jobs: 18 },
 ];
 
 const mockMetrics: PerformanceMetric[] = [

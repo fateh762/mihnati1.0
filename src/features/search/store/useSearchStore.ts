@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { generateId } from '@/lib/utils';
 import { SearchFilters, SearchResult, SavedSearch } from '../types';
 
 const mockResults: SearchResult[] = [
@@ -55,7 +56,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
 
   saveSearch: () => {
     const { query, filters } = get();
-    const newSearch: SavedSearch = { id: crypto.randomUUID(), query, filters, createdAt: new Date().toISOString() };
+    const newSearch: SavedSearch = { id: generateId(), query, filters, createdAt: new Date().toISOString() };
     set(s => ({ savedSearches: [newSearch, ...s.savedSearches] }));
   },
 
