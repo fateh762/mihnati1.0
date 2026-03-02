@@ -17,6 +17,19 @@ const Review = () => {
   const isAr = language === 'ar';
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [categoryRatings, setCategoryRatings] = useState<Record<string, number>>({
+    quality: 0,
+    communication: 0,
+    punctuality: 0,
+    value: 0,
+  });
+
+  const categories = [
+    { key: 'quality', label: isAr ? 'جودة العمل' : 'Work Quality' },
+    { key: 'communication', label: isAr ? 'التواصل' : 'Communication' },
+    { key: 'punctuality', label: isAr ? 'الالتزام بالمواعيد' : 'Punctuality' },
+    { key: 'value', label: isAr ? 'القيمة مقابل المال' : 'Value for Money' },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +72,33 @@ const Review = () => {
                 )} 
               />
             </button>
+          ))}
+        </div>
+
+        <div className="w-full space-y-4">
+          <p className="text-slate-600 font-semibold text-sm text-start">{isAr ? 'تقييم تفصيلي' : 'Detailed Ratings'}</p>
+          {categories.map(cat => (
+            <div key={cat.key} className="flex items-center justify-between">
+              <span className="text-sm text-slate-600">{cat.label}</span>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map(star => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setCategoryRatings(prev => ({ ...prev, [cat.key]: star }))}
+                    className="transition-transform active:scale-90"
+                  >
+                    <Star
+                      size={20}
+                      className={cn(
+                        'transition-colors',
+                        star <= (categoryRatings[cat.key] ?? 0) ? 'text-amber-400 fill-amber-400' : 'text-slate-200'
+                      )}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
