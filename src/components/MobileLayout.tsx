@@ -3,8 +3,9 @@ import { useStore } from '@/store/useStore';
 import { Home, Search, Briefcase, User, Wallet, PlusCircle, MessageSquare } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import NotificationBell from '@/features/notifications/components/NotificationBell';
 
-const MobileLayout = ({ children }: { children: React.Node }) => {
+const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   const { userType, language } = useStore();
   const location = useLocation();
   const isAr = language === 'ar';
@@ -29,6 +30,9 @@ const MobileLayout = ({ children }: { children: React.Node }) => {
       <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-teal-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
+      <header className="sticky top-0 z-20 flex justify-end px-4 pt-3 pb-1">
+        <NotificationBell />
+      </header>
       <main className="flex-1 pb-24 overflow-y-auto relative z-10">
         {children}
       </main>
