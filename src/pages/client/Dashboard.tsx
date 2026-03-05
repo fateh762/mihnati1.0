@@ -4,7 +4,7 @@ import { useStore } from '@/store/useStore';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { PlusCircle, Briefcase, Wallet, Bell, Search, ChevronRight, Zap } from 'lucide-react';
+import { PlusCircle, Briefcase, Wallet, Bell, Search, ChevronRight, Zap, Star } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const ClientDashboard = () => {
@@ -118,4 +118,4 @@ const ClientDashboard = () => {
   );
 };
 
-export default ClientDashboard;
+export default ClientProfile;
