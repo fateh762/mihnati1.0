@@ -22,7 +22,8 @@ const PostJob = () => {
   const isAr = language === 'ar';
 
   const [formData, setFormData] = useState({
-    category: '',
+    mainCategory: '',
+    subCategory: '',
     title: '',
     description: '',
     priceType: 'fixed' as 'fixed' | 'bidding',
@@ -32,22 +33,39 @@ const PostJob = () => {
   });
 
   const categories = [
-    { id: 'driver', label: isAr ? 'سائق خاص' : 'Private Driver', icon: '🚗' },
-    { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist', icon: '💄' },
-    { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist', icon: '💇‍♀️' },
-    { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist', icon: '🎨' },
-    { id: 'tailoring', label: isAr ? 'خياطة وتفصيل' : 'Tailoring', icon: '🧵' },
-    { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon', icon: '💅' },
-    { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing', icon: '🚰' },
-    { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical', icon: '⚡' },
-    { id: 'it_support', label: isAr ? 'دعم فني' : 'IT Support', icon: '💻' },
-    { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Writing', icon: '✍️' },
-    { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content', icon: '🤳' },
-    { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering', icon: '🍲' },
-    { id: 'photography', label: isAr ? 'تصوير' : 'Photography', icon: '📸' },
-    { id: 'ac', label: isAr ? 'تكييف' : 'AC Repair', icon: '❄️' },
-    { id: 'cleaning', label: isAr ? 'تنظيف' : 'Cleaning', icon: '🧹' },
-    { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring', icon: '📚' },
+    {
+      id: 'beauty_care',
+      label: isAr ? 'الجمال والعناية' : 'Beauty & Care',
+      icon: '💄',
+      subs: [
+        { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
+        { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
+        { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
+        { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
+      ]
+    },
+    {
+      id: 'home_maintenance',
+      label: isAr ? 'صيانة المنزل' : 'Home Maintenance',
+      icon: '🏠',
+      subs: [
+        { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
+        { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
+        { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
+        { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
+      ]
+    },
+    {
+      id: 'professional',
+      label: isAr ? 'خدمات مهنية' : 'Professional Services',
+      icon: '💼',
+      subs: [
+        { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
+        { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
+        { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
+        { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
+      ]
+    }
   ];
 
   const handleNext = () => {
@@ -56,7 +74,8 @@ const PostJob = () => {
       const newJob: Job = {
         id: Math.random().toString(36).substr(2, 9),
         clientId: 'current-user',
-        category: formData.category,
+        mainCategory: formData.mainCategory,
+        subCategory: formData.subCategory,
         title: formData.title,
         description: formData.description,
         priceType: formData.priceType,
@@ -105,23 +124,45 @@ const PostJob = () => {
           {step === 1 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'اختر التصنيف' : 'Select Protocol'}</h2>
-              <div className="grid grid-cols-2 gap-4">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setFormData({ ...formData, category: cat.id })}
-                    className={cn(
-                      "p-6 rounded-[2rem] border transition-all duration-300 flex flex-col items-center gap-3 group",
-                      formData.category === cat.id 
-                        ? "border-teal-500/50 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.1)]" 
-                        : "border-white/5 glass hover:border-white/10"
-                    )}
+              {!formData.mainCategory ? (
+                <div className="grid grid-cols-2 gap-4">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setFormData({ ...formData, mainCategory: cat.id })}
+                      className="p-6 rounded-[2rem] border border-white/5 glass hover:border-white/10 transition-all duration-300 flex flex-col items-center gap-3 group"
+                    >
+                      <span className="text-3xl group-hover:scale-110 transition-transform">{cat.icon}</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{cat.label}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <button 
+                    onClick={() => setFormData({ ...formData, mainCategory: '', subCategory: '' })}
+                    className="text-teal-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4"
                   >
-                    <span className="text-3xl group-hover:scale-110 transition-transform">{cat.icon}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">{cat.label}</span>
+                    <ChevronLeft size={14} /> {isAr ? 'العودة للتصنيفات الرئيسية' : 'Back to Main Categories'}
                   </button>
-                ))}
-              </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {categories.find(c => c.id === formData.mainCategory)?.subs.map((sub) => (
+                      <button
+                        key={sub.id}
+                        onClick={() => setFormData({ ...formData, subCategory: sub.id })}
+                        className={cn(
+                          "p-6 rounded-[2rem] border transition-all duration-300 flex flex-col items-center gap-3 group",
+                          formData.subCategory === sub.id 
+                            ? "border-teal-500/50 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.1)]" 
+                            : "border-white/5 glass hover:border-white/10"
+                        )}
+                      >
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{sub.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -147,10 +188,6 @@ const PostJob = () => {
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
-                <div className="p-10 border-2 border-dashed border-white/5 rounded-[2rem] flex flex-col items-center gap-3 text-slate-600 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <Camera size={32} />
-                  <span className="text-[10px] font-black uppercase tracking-widest">{isAr ? 'إضافة صور (اختياري)' : 'Upload Visual Data'}</span>
-                </div>
               </div>
             </motion.div>
           )}
@@ -167,17 +204,6 @@ const PostJob = () => {
                     <p className="text-[9px] font-black uppercase tracking-widest text-slate-500">{isAr ? 'موقع العمل' : 'Target Location'}</p>
                     <p className="font-bold text-white text-sm">{formData.location}</p>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-teal-400 font-black text-[10px] uppercase tracking-widest">{isAr ? 'تغيير' : 'Modify'}</Button>
-                </div>
-                <div className="p-5 glass rounded-[2rem] flex items-center gap-4 border border-white/5">
-                  <div className="p-3 bg-orange-500/10 text-orange-400 rounded-2xl">
-                    <Clock size={24} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-500">{isAr ? 'الموعد المفضل' : 'Execution Time'}</p>
-                    <p className="font-bold text-white text-sm">{isAr ? 'في أقرب وقت' : 'Immediate Sync'}</p>
-                  </div>
-                  <Button variant="ghost" size="sm" className="text-teal-400 font-black text-[10px] uppercase tracking-widest">{isAr ? 'تغيير' : 'Modify'}</Button>
                 </div>
               </div>
             </motion.div>
@@ -201,7 +227,6 @@ const PostJob = () => {
                     <RadioGroupItem value="fixed" className="border-teal-500 text-teal-500" />
                     <div>
                       <p className="font-black text-white uppercase tracking-tight">{isAr ? 'سعر ثابت' : 'Fixed Credits'}</p>
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{isAr ? 'حدد ميزانيتك للعمل' : 'Set static budget'}</p>
                     </div>
                   </div>
                 </Label>
@@ -216,7 +241,6 @@ const PostJob = () => {
                     <RadioGroupItem value="bidding" className="border-teal-500 text-teal-500" />
                     <div>
                       <p className="font-black text-white uppercase tracking-tight">{isAr ? 'نظام المزايدة' : 'Neural Bidding'}</p>
-                      <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">{isAr ? 'دع الفنيين يقدمون عروضهم' : 'Open for expert proposals'}</p>
                     </div>
                   </div>
                 </Label>
@@ -234,11 +258,6 @@ const PostJob = () => {
                   />
                 </motion.div>
               )}
-
-              <div className="p-5 glass rounded-[2rem] flex gap-4 text-teal-400 text-[10px] font-bold uppercase tracking-widest border border-teal-500/20">
-                <Info className="shrink-0" size={20} />
-                <p className="leading-relaxed">{isAr ? 'سيتم إضافة رسوم توصيل بسيطة بناءً على مسافة الفني.' : 'Transport credits will be calculated based on expert proximity.'}</p>
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -247,7 +266,7 @@ const PostJob = () => {
       <div className="p-6 glass border-t border-white/5 sticky bottom-0 z-20">
         <Button 
           onClick={handleNext}
-          disabled={step === 1 && !formData.category}
+          disabled={step === 1 && !formData.subCategory}
           className="w-full h-16 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl text-lg font-black uppercase tracking-widest shadow-[0_0_30px_rgba(20,184,166,0.3)] border-t border-white/20"
         >
           {step === 4 ? (isAr ? 'تأكيد ونشر' : 'Confirm & Deploy') : (isAr ? 'التالي' : 'Next Phase')}

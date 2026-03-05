@@ -73,7 +73,7 @@ const Explore = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
                       <Badge className="bg-teal-500/10 text-teal-400 border-none text-[9px] font-black uppercase tracking-widest">
-                        {job.category}
+                        {job.subCategory}
                       </Badge>
                       <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
                         <Clock size={10} className="text-teal-500" /> {isAr ? 'منذ 5 دقائق' : '5m ago'}

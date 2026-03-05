@@ -15,21 +15,36 @@ const WorkerRegistration = () => {
   const isAr = language === 'ar';
 
   const categories = [
-    { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
-    { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
-    { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
-    { id: 'tailoring', label: isAr ? 'خياطة وتفصيل' : 'Tailoring' },
-    { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
-    { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
-    { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
-    { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
-    { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
-    { id: 'content_creation', label: isAr ? 'صناعة محتوى' : 'Content Creation' },
-    { id: 'catering', label: isAr ? 'تموين وطبخ' : 'Catering' },
-    { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
-    { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
-    { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
-    { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
+    {
+      id: 'beauty_care',
+      label: isAr ? 'الجمال والعناية' : 'Beauty & Care',
+      subs: [
+        { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
+        { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
+        { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
+        { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
+      ]
+    },
+    {
+      id: 'home_maintenance',
+      label: isAr ? 'صيانة المنزل' : 'Home Maintenance',
+      subs: [
+        { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
+        { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
+        { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
+        { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
+      ]
+    },
+    {
+      id: 'professional',
+      label: isAr ? 'خدمات مهنية' : 'Professional Services',
+      subs: [
+        { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
+        { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
+        { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
+        { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
+      ]
+    }
   ];
 
   const handleNext = () => {
@@ -126,6 +141,19 @@ const WorkerRegistration = () => {
                 <SelectContent>
                   {categories.map(cat => (
                     <SelectItem key={cat.id} value={cat.id}>{cat.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>{isAr ? 'التخصص الفرعي' : 'Sub Category'}</Label>
+              <Select>
+                <SelectTrigger className="h-12 rounded-xl">
+                  <SelectValue placeholder={isAr ? 'اختر التخصص الفرعي' : 'Select Sub Category'} />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.flatMap(cat => cat.subs).map(sub => (
+                    <SelectItem key={sub.id} value={sub.id}>{sub.label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>

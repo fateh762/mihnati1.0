@@ -3,7 +3,8 @@ import { create } from 'zustand';
 export interface Job {
   id: string;
   clientId: string;
-  category: string;
+  mainCategory: string;
+  subCategory: string;
   title: string;
   description: string;
   location: { lat: number; lng: number; address: string };
@@ -27,7 +28,8 @@ export const useJobStore = create<JobState>((set) => ({
     {
       id: '1',
       clientId: 'c1',
-      category: 'plumbing',
+      mainCategory: 'home_maintenance',
+      subCategory: 'plumbing',
       title: 'إصلاح تسرب مياه في المطبخ',
       description: 'يوجد تسرب تحت المغسلة يحتاج لإصلاح فوري',
       location: { lat: 24.7136, lng: 46.6753, address: 'حي الملقا، الرياض' },
@@ -41,7 +43,8 @@ export const useJobStore = create<JobState>((set) => ({
     {
       id: '2',
       clientId: 'c2',
-      category: 'ac',
+      mainCategory: 'home_maintenance',
+      subCategory: 'ac',
       title: 'تنظيف مكيفات سبليت',
       description: 'تنظيف 4 مكيفات سبليت مع تعبئة فريون',
       location: { lat: 24.7742, lng: 46.7385, address: 'حي الياسمين، الرياض' },
