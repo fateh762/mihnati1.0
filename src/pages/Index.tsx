@@ -1,12 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import useDyad from '@/hooks/useDyad';
 
 const Index = () => {
+  const navigate = useNavigate();
   const { trackEvent } = useDyad();
 
   const handleExploreClick = () => {
     trackEvent('EXPLORE_CLICKED', { source: 'landing_page' });
+    navigate('/user-type');
+  };
+
+  const handleSignIn = () => {
+    trackEvent('SIGN_IN_CLICKED', { source: 'landing_page' });
+    navigate('/auth');
   };
 
   return (
@@ -15,8 +23,8 @@ const Index = () => {
         <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Mihnati</h1>
           <div className="space-x-2">
-            <Button variant="outline">Sign In</Button>
-            <Button>Get Started</Button>
+            <Button variant="outline" onClick={handleSignIn}>Sign In</Button>
+            <Button onClick={() => navigate('/user-type')}>Get Started</Button>
           </div>
         </nav>
       </header>
