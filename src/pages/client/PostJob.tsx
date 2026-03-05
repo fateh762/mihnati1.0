@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { useJobStore, Job } from '@/store/useJobStore';
@@ -10,9 +10,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Camera, MapPin, Clock, Info, Zap } from 'lucide-react';
+import { ChevronRight, ChevronLeft, MapPin, Clock, Info, Zap } from 'lucide-react';
 import { showSuccess } from '@/utils/toast';
 import { cn } from '@/lib/utils';
+import { categories } from '@/data/categories';
 
 const PostJob = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const PostJob = () => {
   const [formData, setFormData] = useState({
     mainCategory: '',
     subCategory: '',
+    jobId: '',
     title: '',
     description: '',
     priceType: 'fixed' as 'fixed' | 'bidding',
@@ -32,41 +34,13 @@ const PostJob = () => {
     time: 'ASAP'
   });
 
-  const categories = [
-    {
-      id: 'beauty_care',
-      label: isAr ? 'الجمال والعناية' : 'Beauty & Care',
-      icon: '💄',
-      subs: [
-        { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
-        { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
-        { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
-        { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
-      ]
-    },
-    {
-      id: 'home_maintenance',
-      label: isAr ? 'صيانة المنزل' : 'Home Maintenance',
-      icon: '🏠',
-      subs: [
-        { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
-        { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
-        { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
-        { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
-      ]
-    },
-    {
-      id: 'professional',
-      label: isAr ? 'خدمات مهنية' : 'Professional Services',
-      icon: '💼',
-      subs: [
-        { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
-        { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
-        { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
-        { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
-      ]
-    }
-  ];
+  const selectedCategory = useMemo(() => 
+    categories.find(c => c.id === formData.mainCategory),
+  [formData.mainCategory]);
+
+  const selectedSubCategory = useMemo(() => 
+    selectedCategory?.subcategories.find(s => s.id === formData.subCategory),
+  [selectedCategory, formData.subCategory]);
 
   const handleNext = () => {
     if (step < 4) setStep(step + 1);
@@ -75,7 +49,7 @@ const PostJob = () => {
         id: Math.random().toString(36).substr(2, 9),
         clientId: 'current-user',
         mainCategory: formData.mainCategory,
-        subCategory: formData.subCategory,
+        subCategory: formData.jobId, // Using specific job ID as subCategory for display
         title: formData.title,
         description: formData.description,
         priceType: formData.priceType,
@@ -124,6 +98,7 @@ const PostJob = () => {
           {step === 1 && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">{isAr ? 'اختر التصنيف' : 'Select Protocol'}</h2>
+              
               {!formData.mainCategory ? (
                 <div className="grid grid-cols-2 gap-4">
                   {categories.map((cat) => (
@@ -133,31 +108,52 @@ const PostJob = () => {
                       className="p-6 rounded-[2rem] border border-white/5 glass hover:border-white/10 transition-all duration-300 flex flex-col items-center gap-3 group"
                     >
                       <span className="text-3xl group-hover:scale-110 transition-transform">{cat.icon}</span>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{cat.label}</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{isAr ? cat.name_ar : cat.name_en}</span>
                     </button>
                   ))}
                 </div>
-              ) : (
+              ) : !formData.subCategory ? (
                 <div className="space-y-4">
                   <button 
-                    onClick={() => setFormData({ ...formData, mainCategory: '', subCategory: '' })}
+                    onClick={() => setFormData({ ...formData, mainCategory: '' })}
                     className="text-teal-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4"
                   >
                     <ChevronLeft size={14} /> {isAr ? 'العودة للتصنيفات الرئيسية' : 'Back to Main Categories'}
                   </button>
                   <div className="grid grid-cols-2 gap-4">
-                    {categories.find(c => c.id === formData.mainCategory)?.subs.map((sub) => (
+                    {selectedCategory?.subcategories.map((sub) => (
                       <button
                         key={sub.id}
                         onClick={() => setFormData({ ...formData, subCategory: sub.id })}
+                        className="p-6 rounded-[2rem] border border-white/5 glass hover:border-white/10 transition-all duration-300 flex flex-col items-center gap-3 group"
+                      >
+                        <span className="text-3xl group-hover:scale-110 transition-transform">{sub.icon}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{isAr ? sub.name_ar : sub.name_en}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <button 
+                    onClick={() => setFormData({ ...formData, subCategory: '' })}
+                    className="text-teal-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 mb-4"
+                  >
+                    <ChevronLeft size={14} /> {isAr ? 'العودة للتصنيفات الفرعية' : 'Back to Sub Categories'}
+                  </button>
+                  <div className="grid grid-cols-2 gap-4">
+                    {selectedSubCategory?.jobs.map((job) => (
+                      <button
+                        key={job.id}
+                        onClick={() => setFormData({ ...formData, jobId: job.id })}
                         className={cn(
                           "p-6 rounded-[2rem] border transition-all duration-300 flex flex-col items-center gap-3 group",
-                          formData.subCategory === sub.id 
+                          formData.jobId === job.id 
                             ? "border-teal-500/50 bg-teal-500/10 shadow-[0_0_20px_rgba(20,184,166,0.1)]" 
                             : "border-white/5 glass hover:border-white/10"
                         )}
                       >
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{sub.label}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 text-center">{isAr ? job.name_ar : job.name_en}</span>
                       </button>
                     ))}
                   </div>
@@ -266,7 +262,7 @@ const PostJob = () => {
       <div className="p-6 glass border-t border-white/5 sticky bottom-0 z-20">
         <Button 
           onClick={handleNext}
-          disabled={step === 1 && !formData.subCategory}
+          disabled={step === 1 && !formData.jobId}
           className="w-full h-16 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl text-lg font-black uppercase tracking-widest shadow-[0_0_30px_rgba(20,184,166,0.3)] border-t border-white/20"
         >
           {step === 4 ? (isAr ? 'تأكيد ونشر' : 'Confirm & Deploy') : (isAr ? 'التالي' : 'Next Phase')}

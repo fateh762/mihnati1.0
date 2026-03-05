@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { motion } from 'framer-motion';
 import { Camera, Upload, CheckCircle2 } from 'lucide-react';
+import { categories } from '@/data/categories';
 
 const WorkerRegistration = () => {
   const navigate = useNavigate();
@@ -14,38 +15,19 @@ const WorkerRegistration = () => {
   const [step, setStep] = useState(1);
   const isAr = language === 'ar';
 
-  const categories = [
-    {
-      id: 'beauty_care',
-      label: isAr ? 'الجمال والعناية' : 'Beauty & Care',
-      subs: [
-        { id: 'makeup', label: isAr ? 'خبيرة تجميل' : 'Makeup Artist' },
-        { id: 'hair_stylist', label: isAr ? 'مصففة شعر' : 'Hair Stylist' },
-        { id: 'henna', label: isAr ? 'نقش حناء' : 'Henna Artist' },
-        { id: 'home_salon', label: isAr ? 'صالون منزلي' : 'Home Salon' },
-      ]
-    },
-    {
-      id: 'home_maintenance',
-      label: isAr ? 'صيانة المنزل' : 'Home Maintenance',
-      subs: [
-        { id: 'plumbing', label: isAr ? 'سباكة' : 'Plumbing' },
-        { id: 'electrical', label: isAr ? 'كهرباء' : 'Electrical' },
-        { id: 'ac', label: isAr ? 'تكييف وتبريد' : 'AC & Cooling' },
-        { id: 'cleaning', label: isAr ? 'تنظيف وتعقيم' : 'Cleaning' },
-      ]
-    },
-    {
-      id: 'professional',
-      label: isAr ? 'خدمات مهنية' : 'Professional Services',
-      subs: [
-        { id: 'it_support', label: isAr ? 'دعم فني وتقني' : 'IT Support' },
-        { id: 'writing', label: isAr ? 'كتابة محتوى' : 'Content Writing' },
-        { id: 'photography', label: isAr ? 'تصوير فوتوغرافي' : 'Photography' },
-        { id: 'tutoring', label: isAr ? 'تدريس خصوصي' : 'Tutoring' },
-      ]
-    }
-  ];
+  const [formData, setFormData] = useState({
+    mainCategory: '',
+    subCategory: '',
+    jobId: ''
+  });
+
+  const selectedCategory = useMemo(() => 
+    categories.find(c => c.id === formData.mainCategory),
+  [formData.mainCategory]);
+
+  const selectedSubCategory = useMemo(() => 
+    selectedCategory?.subcategories.find(s => s.id === formData.subCategory),
+  [selectedCategory, formData.subCategory]);
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -134,34 +116,55 @@ const WorkerRegistration = () => {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label>{isAr ? 'التخصص الرئيسي' : 'Main Category'}</Label>
-              <Select>
+              <Select onValueChange={(val) => setFormData({ ...formData, mainCategory: val, subCategory: '', jobId: '' })}>
                 <SelectTrigger className="h-12 rounded-xl">
                   <SelectValue placeholder={isAr ? 'اختر التخصص' : 'Select Category'} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map(cat => (
-                    <SelectItem key={cat.id} value={cat.id}>{cat.label}</SelectItem>
+                    <SelectItem key={cat.id} value={cat.id}>{isAr ? cat.name_ar : cat.name_en}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label>{isAr ? 'التخصص الفرعي' : 'Sub Category'}</Label>
-              <Select>
-                <SelectTrigger className="h-12 rounded-xl">
-                  <SelectValue placeholder={isAr ? 'اختر التخصص الفرعي' : 'Select Sub Category'} />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.flatMap(cat => cat.subs).map(sub => (
-                    <SelectItem key={sub.id} value={sub.id}>{sub.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            
+            {formData.mainCategory && (
+              <div className="space-y-2">
+                <Label>{isAr ? 'التخصص الفرعي' : 'Sub Category'}</Label>
+                <Select onValueChange={(val) => setFormData({ ...formData, subCategory: val, jobId: '' })}>
+                  <SelectTrigger className="h-12 rounded-xl">
+                    <SelectValue placeholder={isAr ? 'اختر التخصص الفرعي' : 'Select Sub Category'} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {selectedCategory?.subcategories.map(sub => (
+                      <SelectItem key={sub.id} value={sub.id}>{isAr ? sub.name_ar : sub.name_en}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {formData.subCategory && (
+              <div className="space-y-2">
+                <Label>{isAr ? 'المهنة المحددة' : 'Specific Job'}</Label>
+                <Select onValueChange={(val) => setFormData({ ...formData, jobId: val })}>
+                  <SelectTrigger className="h-12 rounded-xl">
+                    <SelectValue placeholder={isAr ? 'اختر المهنة' : 'Select Job'} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {selectedSubCategory?.jobs.map(job => (
+                      <SelectItem key={job.id} value={job.id}>{isAr ? job.name_ar : job.name_en}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label>{isAr ? 'سنوات الخبرة' : 'Years of Experience'}</Label>
               <Input type="number" className="h-12 rounded-xl" placeholder="0" />
             </div>
+            
             <div className="p-6 bg-teal-50 rounded-2xl border border-teal-100 flex items-start gap-4">
               <CheckCircle2 className="text-teal-600 shrink-0" />
               <p className="text-sm text-teal-800 leading-relaxed">
@@ -186,6 +189,7 @@ const WorkerRegistration = () => {
         )}
         <Button 
           onClick={handleNext}
+          disabled={step === 3 && !formData.jobId}
           className="flex-[2] h-14 bg-teal-600 hover:bg-teal-700 rounded-xl text-lg shadow-md"
         >
           {step === 3 ? (isAr ? 'إرسال للطلب' : 'Submit Application') : (isAr ? 'التالي' : 'Next')}
