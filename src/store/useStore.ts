@@ -1,29 +1,19 @@
 import { create } from 'zustand';
 
-export type UserType = 'worker' | 'client' | 'admin' | null;
-export type Language = 'ar' | 'en';
-
-interface AppState {
-  user: any | null;
-  userType: UserType;
-  language: Language;
-  isLoggedIn: boolean;
-  setUser: (user: any) => void;
-  setUserType: (type: UserType) => void;
-  setLanguage: (lang: Language) => void;
-  logout: () => void;
+interface StoreState {
+  language: 'en' | 'ar';
+  setLanguage: (lang: 'en' | 'ar') => void;
+  userType: 'worker' | 'client' | null;
+  setUserType: (type: 'worker' | 'client' | null) => void;
+  isAuthenticated: boolean;
+  setAuthenticated: (auth: boolean) => void;
 }
 
-export const useStore = create<AppState>((set) => ({
-  user: null,
+export const useStore = create<StoreState>((set) => ({
+  language: 'en',
+  setLanguage: (lang) => set({ language: lang }),
   userType: null,
-  language: 'ar',
-  isLoggedIn: false,
-  setUser: (user) => set({ user, isLoggedIn: !!user }),
   setUserType: (type) => set({ userType: type }),
-  setLanguage: (lang) => {
-    document.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    set({ language: lang });
-  },
-  logout: () => set({ user: null, userType: null, isLoggedIn: false }),
+  isAuthenticated: false,
+  setAuthenticated: (auth) => set({ isAuthenticated: auth }),
 }));
