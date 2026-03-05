@@ -118,4 +118,4 @@ const ClientDashboard = () => {
   );
 };
 
-export default ClientProfile;
+export default ClientDashboard;
