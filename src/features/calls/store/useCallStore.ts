@@ -18,7 +18,7 @@ interface CallState {
   endCall: () => void;
   toggleMute: () => void;
   toggleVideo: () => void;
-  scheduleCall: (data: { participantId: string; participantName: string; type: CallType; scheduledAt: string; topic: string }) => void;
+  scheduleCall: (data: { participantId: string; participantName: string; type: CallType; scheduledAt: string; topic: string; topicAr: string }) => void;
 }
 
 export const useCallStore = create<CallState>((set, get) => ({

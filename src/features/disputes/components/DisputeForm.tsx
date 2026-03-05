@@ -41,7 +41,7 @@ export default function DisputeForm({ onSuccess }: Props) {
   });
 
   const onSubmit = async (data: FormData) => {
-    await submitDispute(data);
+    await submitDispute(data as any);
     setSubmitted(true);
     onSuccess?.();
   };

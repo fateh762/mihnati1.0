@@ -36,9 +36,11 @@ export default function ImageUploader({ onUploaded }: Props) {
     maxSize: 20 * 1024 * 1024,
   });
 
+  const { onDrag: _onDrag, onDragStart: _onDragStart, onDragEnd: _onDragEnd, ...dropzoneProps } = getRootProps();
+
   return (
     <motion.div
-      {...getRootProps()}
+      {...dropzoneProps}
       whileHover={{ scale: 1.01 }}
       className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${isDragActive ? 'border-teal-400 bg-teal-500/10' : 'border-white/10 hover:border-white/20 hover:bg-white/2'}`}
     >

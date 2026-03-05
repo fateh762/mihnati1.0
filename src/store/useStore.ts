@@ -7,6 +7,7 @@ interface StoreState {
   setUserType: (type: 'worker' | 'client' | null) => void;
   isAuthenticated: boolean;
   setAuthenticated: (auth: boolean) => void;
+  logout: () => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -16,4 +17,5 @@ export const useStore = create<StoreState>((set) => ({
   setUserType: (type) => set({ userType: type }),
   isAuthenticated: false,
   setAuthenticated: (auth) => set({ isAuthenticated: auth }),
+  logout: () => set({ userType: null, isAuthenticated: false }),
 }));

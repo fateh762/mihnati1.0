@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Globe, LogOut, User, Shield, Bell, HelpCircle, ChevronRight, ChevronLeft, CreditCard, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 const ClientProfile = () => {
   const { language, setLanguage, logout } = useStore();
